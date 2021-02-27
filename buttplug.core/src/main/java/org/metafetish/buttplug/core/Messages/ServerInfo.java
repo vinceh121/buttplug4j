@@ -1,48 +1,49 @@
 package org.metafetish.buttplug.core.Messages;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.metafetish.buttplug.core.ButtplugConsts;
 import org.metafetish.buttplug.core.ButtplugMessage;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ServerInfo extends ButtplugMessage {
-    @JsonProperty(value = "MajorVersion", required = true)
-    public int majorVersion;
+	@JsonProperty(value = "MajorVersion", required = true)
+	public int majorVersion;
 
-    @JsonProperty(value = "MinorVersion", required = true)
-    public int minorVersion;
+	@JsonProperty(value = "MinorVersion", required = true)
+	public int minorVersion;
 
-    @JsonProperty(value = "BuildVersion", required = true)
-    public int buildVersion;
+	@JsonProperty(value = "BuildVersion", required = true)
+	public int buildVersion;
 
-    @JsonProperty(value = "MessageVersion", required = true)
-    public int messageVersion;
+	@JsonProperty(value = "MessageVersion", required = true)
+	public int messageVersion;
 
-    @JsonProperty(value = "MaxPingTime", required = true)
-    public long maxPingTime;
+	@JsonProperty(value = "MaxPingTime", required = true)
+	public long maxPingTime;
 
-    @JsonProperty(value = "ServerName", required = true)
-    public String serverName;
+	@JsonProperty(value = "ServerName", required = true)
+	public String serverName;
 
-    public ServerInfo(String serverName, int messageVersion, long maxPingTime, long id) {
-        super(id);
+	public ServerInfo(final String serverName, final int messageVersion, final long maxPingTime, final long id) {
+		super(id);
 
-        this.serverName = serverName;
-        this.messageVersion = messageVersion;
-        this.maxPingTime = maxPingTime;
-        this.majorVersion = 0;
-        this.minorVersion = 0;
-        this.buildVersion = 1;
-    }
+		this.serverName = serverName;
+		this.messageVersion = messageVersion;
+		this.maxPingTime = maxPingTime;
+		this.majorVersion = 0;
+		this.minorVersion = 0;
+		this.buildVersion = 1;
+	}
 
-    @SuppressWarnings("unused")
-    private ServerInfo() {
-        super(ButtplugConsts.DefaultMsgId);
+	@SuppressWarnings("unused")
+	private ServerInfo() {
+		super(ButtplugConsts.DefaultMsgId);
 
-        this.serverName = "";
-        this.messageVersion = 1;
-        this.maxPingTime = 0;
-        this.majorVersion = 0;
-        this.minorVersion = 0;
-        this.buildVersion = 1;
-    }
+		this.serverName = "";
+		this.messageVersion = 1;
+		this.maxPingTime = 0;
+		this.majorVersion = 0;
+		this.minorVersion = 0;
+		this.buildVersion = 1;
+	}
 }

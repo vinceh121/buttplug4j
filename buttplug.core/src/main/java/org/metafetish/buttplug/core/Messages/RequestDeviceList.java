@@ -5,12 +5,12 @@ import org.metafetish.buttplug.core.ButtplugMessage;
 
 public class RequestDeviceList extends ButtplugMessage {
 
-    @SuppressWarnings("unused")
-    private RequestDeviceList() {
-        super(ButtplugConsts.DefaultMsgId);
-    }
+	@SuppressWarnings("unused")
+	private RequestDeviceList() {
+		super(ButtplugConsts.DefaultMsgId);
+	}
 
-    public RequestDeviceList(long id) {
-        super(id);
-    }
+	public RequestDeviceList(final long id) {
+		super(id);
+	}
 }

@@ -5,12 +5,12 @@ import org.metafetish.buttplug.core.ButtplugMessage;
 
 public class StartScanning extends ButtplugMessage {
 
-    @SuppressWarnings("unused")
-    private StartScanning() {
-        super(ButtplugConsts.DefaultMsgId);
-    }
+	@SuppressWarnings("unused")
+	private StartScanning() {
+		super(ButtplugConsts.DefaultMsgId);
+	}
 
-    public StartScanning(long id) {
-        super(id);
-    }
+	public StartScanning(final long id) {
+		super(id);
+	}
 }

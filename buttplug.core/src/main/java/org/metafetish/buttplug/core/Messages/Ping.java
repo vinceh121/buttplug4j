@@ -5,12 +5,12 @@ import org.metafetish.buttplug.core.ButtplugMessage;
 
 public class Ping extends ButtplugMessage {
 
-    @SuppressWarnings("unused")
-    private Ping() {
-        super(ButtplugConsts.DefaultMsgId);
-    }
+	@SuppressWarnings("unused")
+	private Ping() {
+		super(ButtplugConsts.DefaultMsgId);
+	}
 
-    public Ping(long id) {
-        super(id);
-    }
+	public Ping(final long id) {
+		super(id);
+	}
 }

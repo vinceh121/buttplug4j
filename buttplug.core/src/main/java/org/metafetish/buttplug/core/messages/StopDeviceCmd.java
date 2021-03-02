@@ -1,4 +1,4 @@
-package org.metafetish.buttplug.core.Messages;
+package org.metafetish.buttplug.core.messages;
 
 import org.metafetish.buttplug.core.ButtplugConsts;
 import org.metafetish.buttplug.core.ButtplugDeviceMessage;

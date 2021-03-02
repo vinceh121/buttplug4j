@@ -1,26 +1,34 @@
-package org.metafetish.buttplug.core.Messages;
-
-import org.metafetish.buttplug.core.ButtplugConsts;
-import org.metafetish.buttplug.core.ButtplugDeviceMessage;
+package org.metafetish.buttplug.core.messages;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class DeviceAdded extends ButtplugDeviceMessage {
+public class DeviceMessageInfo {
+
+	@JsonProperty(value = "DeviceIndex", required = true)
+	private long deviceIndex;
+
 	@JsonProperty(value = "DeviceName", required = true)
 	private String deviceName;
 
 	@JsonProperty(value = "DeviceMessages", required = true)
 	private String[] deviceMessages;
 
-	public DeviceAdded() {
-		this(0, "", new String[0]);
+	public DeviceMessageInfo() {
+		this(-1, "", new String[0]);
 	}
 
-	public DeviceAdded(final long deviceIndex, final String deviceName, final String[] deviceMessages) {
-		super(ButtplugConsts.SYSTEM_MSG_ID, deviceIndex);
-
+	public DeviceMessageInfo(final long deviceIndex, final String deviceName, final String[] deviceMessages) {
 		this.deviceName = deviceName;
+		this.deviceIndex = deviceIndex;
 		this.deviceMessages = deviceMessages;
+	}
+
+	public long getDeviceIndex() {
+		return this.deviceIndex;
+	}
+
+	public void setDeviceIndex(final long deviceIndex) {
+		this.deviceIndex = deviceIndex;
 	}
 
 	public String getDeviceName() {

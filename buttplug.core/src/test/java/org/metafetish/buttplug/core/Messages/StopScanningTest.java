@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.metafetish.buttplug.core.ButtplugJsonMessageParser;
 import org.metafetish.buttplug.core.ButtplugMessage;
+import org.metafetish.buttplug.core.messages.StopScanning;
 
 public class StopScanningTest {
 

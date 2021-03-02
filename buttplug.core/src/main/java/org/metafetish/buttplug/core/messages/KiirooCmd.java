@@ -1,20 +1,20 @@
-package org.metafetish.buttplug.core.Messages;
+package org.metafetish.buttplug.core.messages;
 
 import org.metafetish.buttplug.core.ButtplugConsts;
 import org.metafetish.buttplug.core.ButtplugDeviceMessage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class LovenseCmd extends ButtplugDeviceMessage {
+public class KiirooCmd extends ButtplugDeviceMessage {
 
 	@JsonProperty(value = "Command", required = true)
 	private String deviceCmd;
 
-	public LovenseCmd() {
+	public KiirooCmd() {
 		this(-1, "", ButtplugConsts.DefaultMsgId);
 	}
 
-	public LovenseCmd(final long deviceIndex, final String deviceCmd, final long id) {
+	public KiirooCmd(final long deviceIndex, final String deviceCmd, final long id) {
 		super(id, deviceIndex);
 		this.deviceCmd = deviceCmd;
 	}

@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.metafetish.buttplug.core.ButtplugJsonMessageParser;
 import org.metafetish.buttplug.core.ButtplugMessage;
+import org.metafetish.buttplug.core.messages.VorzeA10CycloneCmd;
 
 public class VorzeA10CycloneCmdTest {
 

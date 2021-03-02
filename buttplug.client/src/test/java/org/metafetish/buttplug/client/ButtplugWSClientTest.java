@@ -5,8 +5,8 @@ import java.net.URI;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.metafetish.buttplug.core.Messages.SingleMotorVibrateCmd;
-import org.metafetish.buttplug.core.Messages.StopAllDevices;
+import org.metafetish.buttplug.core.messages.SingleMotorVibrateCmd;
+import org.metafetish.buttplug.core.messages.StopAllDevices;
 
 public class ButtplugWSClientTest {
 

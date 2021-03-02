@@ -1,15 +1,15 @@
-package org.metafetish.buttplug.core.Messages;
+package org.metafetish.buttplug.core.messages;
 
 import org.metafetish.buttplug.core.ButtplugConsts;
 import org.metafetish.buttplug.core.ButtplugMessage;
 
-public class Ok extends ButtplugMessage {
+public class Ping extends ButtplugMessage {
 
-	public Ok() {
+	public Ping() {
 		this(ButtplugConsts.DefaultMsgId);
 	}
 
-	public Ok(final long id) {
+	public Ping(final long id) {
 		super(id);
 	}
 }

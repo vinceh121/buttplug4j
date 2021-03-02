@@ -1,15 +1,15 @@
-package org.metafetish.buttplug.core.Messages;
+package org.metafetish.buttplug.core.messages;
 
 import org.metafetish.buttplug.core.ButtplugConsts;
 import org.metafetish.buttplug.core.ButtplugMessage;
 
-public class StopAllDevices extends ButtplugMessage {
+public class StartScanning extends ButtplugMessage {
 
-	public StopAllDevices() {
+	public StartScanning() {
 		super(ButtplugConsts.DefaultMsgId);
 	}
 
-	public StopAllDevices(final long id) {
+	public StartScanning(final long id) {
 		super(id);
 	}
 }

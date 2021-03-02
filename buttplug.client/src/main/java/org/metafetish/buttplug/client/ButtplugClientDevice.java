@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.metafetish.buttplug.core.Messages.DeviceAdded;
-import org.metafetish.buttplug.core.Messages.DeviceMessageInfo;
-import org.metafetish.buttplug.core.Messages.DeviceRemoved;
+import org.metafetish.buttplug.core.messages.DeviceAdded;
+import org.metafetish.buttplug.core.messages.DeviceMessageInfo;
+import org.metafetish.buttplug.core.messages.DeviceRemoved;
 
 public class ButtplugClientDevice {
 	private long index;

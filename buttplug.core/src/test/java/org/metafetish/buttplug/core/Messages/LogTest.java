@@ -7,7 +7,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.metafetish.buttplug.core.ButtplugJsonMessageParser;
 import org.metafetish.buttplug.core.ButtplugMessage;
-import org.metafetish.buttplug.core.Messages.RequestLog.ButtplugLogLevel;
+import org.metafetish.buttplug.core.messages.Log;
+import org.metafetish.buttplug.core.messages.RequestLog.ButtplugLogLevel;
 
 public class LogTest {
 

@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.metafetish.buttplug.core.Messages.RequestLog.ButtplugLogLevel;
+import org.metafetish.buttplug.core.messages.RequestLog.ButtplugLogLevel;
 
 public class ButtplugLogLevelTest {
 

@@ -20,10 +20,10 @@ public class FleshlightLaunchFW12CmdTest {
 
 		Assert.assertEquals(msgs.size(), 1);
 		Assert.assertEquals(msgs.get(0).getClass(), FleshlightLaunchFW12Cmd.class);
-		Assert.assertEquals(msgs.get(0).id, 7);
-		Assert.assertEquals(((FleshlightLaunchFW12Cmd) msgs.get(0)).deviceIndex, 3);
-		Assert.assertEquals(((FleshlightLaunchFW12Cmd) msgs.get(0)).GetSpeed(), 15);
-		Assert.assertEquals(((FleshlightLaunchFW12Cmd) msgs.get(0)).GetPosition(), 85);
+		Assert.assertEquals(msgs.get(0).getId(), 7);
+		Assert.assertEquals(((FleshlightLaunchFW12Cmd) msgs.get(0)).getDeviceIndex(), 3);
+		Assert.assertEquals(((FleshlightLaunchFW12Cmd) msgs.get(0)).getSpeed(), 15);
+		Assert.assertEquals(((FleshlightLaunchFW12Cmd) msgs.get(0)).getPosition(), 85);
 
 		String jsonOut = parser.formatJson(msgs);
 		Assert.assertEquals(testStr, jsonOut);

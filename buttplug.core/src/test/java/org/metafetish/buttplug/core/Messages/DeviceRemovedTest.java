@@ -19,8 +19,8 @@ public class DeviceRemovedTest {
 
 		Assert.assertEquals(1, msgs.size());
 		Assert.assertEquals(DeviceRemoved.class, msgs.get(0).getClass());
-		Assert.assertEquals(3, msgs.get(0).id);
-		Assert.assertEquals(2, ((DeviceRemoved) msgs.get(0)).deviceIndex);
+		Assert.assertEquals(3, msgs.get(0).getId());
+		Assert.assertEquals(2, ((DeviceRemoved) msgs.get(0)).getDeviceIndex());
 
 		String jsonOut = parser.formatJson(msgs);
 		Assert.assertEquals(testStr, jsonOut);

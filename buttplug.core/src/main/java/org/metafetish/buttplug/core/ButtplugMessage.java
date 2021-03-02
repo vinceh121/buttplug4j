@@ -54,9 +54,17 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 public abstract class ButtplugMessage {
 
 	@JsonProperty(value = "Id", required = true)
-	public long id;
+	private long id;
 
 	public ButtplugMessage(final long id) {
+		this.id = id;
+	}
+
+	public long getId() {
+		return this.id;
+	}
+
+	public void setId(final long id) {
 		this.id = id;
 	}
 }

@@ -7,22 +7,35 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class DeviceAdded extends ButtplugDeviceMessage {
 	@JsonProperty(value = "DeviceName", required = true)
-	public String deviceName;
+	private String deviceName;
 
 	@JsonProperty(value = "DeviceMessages", required = true)
-	public String[] deviceMessages;
+	private String[] deviceMessages;
+
+	public DeviceAdded() {
+		this(0, "", new String[0]);
+	}
 
 	public DeviceAdded(final long deviceIndex, final String deviceName, final String[] deviceMessages) {
-		super(ButtplugConsts.SystemMsgId, deviceIndex);
+		super(ButtplugConsts.SYSTEM_MSG_ID, deviceIndex);
 
 		this.deviceName = deviceName;
 		this.deviceMessages = deviceMessages;
 	}
 
-	@SuppressWarnings("unused")
-	private DeviceAdded() {
-		super(ButtplugConsts.SystemMsgId, 0);
-		this.deviceName = "";
-		this.deviceMessages = new String[] {};
+	public String getDeviceName() {
+		return this.deviceName;
+	}
+
+	public void setDeviceName(final String deviceName) {
+		this.deviceName = deviceName;
+	}
+
+	public String[] getDeviceMessages() {
+		return this.deviceMessages;
+	}
+
+	public void setDeviceMessages(final String[] deviceMessages) {
+		this.deviceMessages = deviceMessages;
 	}
 }

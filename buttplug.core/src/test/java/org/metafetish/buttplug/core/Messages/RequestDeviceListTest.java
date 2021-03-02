@@ -19,7 +19,7 @@ public class RequestDeviceListTest {
 
 		Assert.assertEquals(msgs.size(), 1);
 		Assert.assertEquals(msgs.get(0).getClass(), RequestDeviceList.class);
-		Assert.assertEquals(msgs.get(0).id, 7);
+		Assert.assertEquals(msgs.get(0).getId(), 7);
 
 		String jsonOut = parser.formatJson(msgs);
 		Assert.assertEquals(testStr, jsonOut);

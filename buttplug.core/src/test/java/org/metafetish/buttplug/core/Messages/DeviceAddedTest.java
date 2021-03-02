@@ -20,10 +20,11 @@ public class DeviceAddedTest {
 
 		Assert.assertEquals(1, msgs.size());
 		Assert.assertEquals(DeviceAdded.class, msgs.get(0).getClass());
-		Assert.assertEquals(3, msgs.get(0).id);
-		Assert.assertEquals(2, ((DeviceAdded) msgs.get(0)).deviceIndex);
-		Assert.assertEquals("foo", ((DeviceAdded) msgs.get(0)).deviceName);
-		Assert.assertArrayEquals(new String[] { "foo-cmd-1", "foo-cmd-2" }, ((DeviceAdded) msgs.get(0)).deviceMessages);
+		Assert.assertEquals(3, msgs.get(0).getId());
+		Assert.assertEquals(2, ((DeviceAdded) msgs.get(0)).getDeviceIndex());
+		Assert.assertEquals("foo", ((DeviceAdded) msgs.get(0)).getDeviceName());
+		Assert.assertArrayEquals(new String[] { "foo-cmd-1", "foo-cmd-2" },
+				((DeviceAdded) msgs.get(0)).getDeviceMessages());
 
 		String jsonOut = parser.formatJson(msgs);
 		Assert.assertEquals(testStr, jsonOut);

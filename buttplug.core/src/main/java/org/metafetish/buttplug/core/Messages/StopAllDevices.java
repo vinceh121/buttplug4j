@@ -5,8 +5,7 @@ import org.metafetish.buttplug.core.ButtplugMessage;
 
 public class StopAllDevices extends ButtplugMessage {
 
-	@SuppressWarnings("unused")
-	private StopAllDevices() {
+	public StopAllDevices() {
 		super(ButtplugConsts.DefaultMsgId);
 	}
 

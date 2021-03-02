@@ -9,12 +9,10 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public class RequestLog extends ButtplugMessage {
 
 	@JsonProperty(value = "LogLevel", required = true)
-	public ButtplugLogLevel logLevel;
+	private ButtplugLogLevel logLevel;
 
-	@SuppressWarnings("unused")
-	private RequestLog() {
-		super(ButtplugConsts.DefaultMsgId);
-		this.logLevel = ButtplugLogLevel.OFF;
+	public RequestLog() {
+		this(ButtplugLogLevel.OFF, ButtplugConsts.DefaultMsgId);
 	}
 
 	public RequestLog(final ButtplugLogLevel logLevel, final long id) {
@@ -22,10 +20,18 @@ public class RequestLog extends ButtplugMessage {
 		this.logLevel = logLevel;
 	}
 
+	public ButtplugLogLevel getLogLevel() {
+		return this.logLevel;
+	}
+
+	public void setLogLevel(final ButtplugLogLevel logLevel) {
+		this.logLevel = logLevel;
+	}
+
 	public enum ButtplugLogLevel {
 		OFF("Off"), FATAL("Fatal"), ERROR("Error"), WARN("Warn"), INFO("Info"), DEBUG("Debug"), TRACE("Trace");
 
-		private String jsonName;
+		private final String jsonName;
 
 		ButtplugLogLevel(final String jsonName) {
 			this.jsonName = jsonName;

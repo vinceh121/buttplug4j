@@ -20,9 +20,9 @@ public class LogTest {
 
 		Assert.assertEquals(msgs.size(), 1);
 		Assert.assertEquals(msgs.get(0).getClass(), Log.class);
-		Assert.assertEquals(msgs.get(0).id, 7);
-		Assert.assertEquals(((Log) msgs.get(0)).logLevel, ButtplugLogLevel.WARN);
-		Assert.assertEquals(((Log) msgs.get(0)).logMessage, "TestLog");
+		Assert.assertEquals(msgs.get(0).getId(), 7);
+		Assert.assertEquals(((Log) msgs.get(0)).getLogLevel(), ButtplugLogLevel.WARN);
+		Assert.assertEquals(((Log) msgs.get(0)).getLogMessage(), "TestLog");
 
 		String jsonOut = parser.formatJson(msgs);
 		Assert.assertEquals(testStr, jsonOut);

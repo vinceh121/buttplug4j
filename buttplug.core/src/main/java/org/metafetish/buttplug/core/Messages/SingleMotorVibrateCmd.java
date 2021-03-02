@@ -10,25 +10,23 @@ public class SingleMotorVibrateCmd extends ButtplugDeviceMessage {
 	@JsonProperty(value = "Speed", required = true)
 	private double speed;
 
+	public SingleMotorVibrateCmd() {
+		this(-1, 0, ButtplugConsts.DefaultMsgId);
+	}
+
 	public SingleMotorVibrateCmd(final long deviceIndex, final double speed, final long id) {
 		super(id, deviceIndex);
-		this.SetSpeed(speed);
+		this.setSpeed(speed);
 	}
 
-	@SuppressWarnings("unused")
-	private SingleMotorVibrateCmd() {
-		super(ButtplugConsts.DefaultMsgId, -1);
-		this.SetSpeed(0);
-	}
-
-	public double GetSpeed() {
+	public double getSpeed() {
 		if (this.speed > 1 || this.speed < 0) {
 			return 0;
 		}
 		return this.speed;
 	}
 
-	public void SetSpeed(final double speed) {
+	public void setSpeed(final double speed) {
 		if (speed > 1) {
 			throw new IllegalArgumentException("SingleMotorVibrateCmd cannot have a speed higher than 1!");
 		}

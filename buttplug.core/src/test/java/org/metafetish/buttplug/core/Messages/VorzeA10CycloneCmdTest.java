@@ -20,10 +20,10 @@ public class VorzeA10CycloneCmdTest {
 
 		Assert.assertEquals(msgs.size(), 1);
 		Assert.assertEquals(msgs.get(0).getClass(), VorzeA10CycloneCmd.class);
-		Assert.assertEquals(msgs.get(0).id, 7);
-		Assert.assertEquals(((VorzeA10CycloneCmd) msgs.get(0)).deviceIndex, 3);
-		Assert.assertEquals(((VorzeA10CycloneCmd) msgs.get(0)).GetSpeed(), 15);
-		Assert.assertEquals(((VorzeA10CycloneCmd) msgs.get(0)).clockwise, true);
+		Assert.assertEquals(msgs.get(0).getId(), 7);
+		Assert.assertEquals(((VorzeA10CycloneCmd) msgs.get(0)).getDeviceIndex(), 3);
+		Assert.assertEquals(((VorzeA10CycloneCmd) msgs.get(0)).getSpeed(), 15);
+		Assert.assertEquals(((VorzeA10CycloneCmd) msgs.get(0)).isClockwise(), true);
 
 		String jsonOut = parser.formatJson(msgs);
 		Assert.assertEquals(testStr, jsonOut);

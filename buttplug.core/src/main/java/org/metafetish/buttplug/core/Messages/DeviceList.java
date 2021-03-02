@@ -8,16 +8,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class DeviceList extends ButtplugMessage {
 
 	@JsonProperty(value = "Devices", required = true)
-	public DeviceMessageInfo[] devices;
+	private DeviceMessageInfo[] devices;
+
+	public DeviceList() {
+		this(new DeviceMessageInfo[0], ButtplugConsts.DefaultMsgId);
+	}
 
 	public DeviceList(final DeviceMessageInfo[] devices, final long id) {
 		super(id);
 		this.devices = devices;
 	}
 
-	@SuppressWarnings("unused")
-	private DeviceList() {
-		super(ButtplugConsts.DefaultMsgId);
-		this.devices = new DeviceMessageInfo[] {};
+	public DeviceMessageInfo[] getDevices() {
+		return this.devices;
+	}
+
+	public void setDevices(final DeviceMessageInfo[] devices) {
+		this.devices = devices;
 	}
 }

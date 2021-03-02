@@ -20,17 +20,17 @@ public class DeviceListTest {
 
 		Assert.assertEquals(1, msgs.size());
 		Assert.assertEquals(DeviceList.class, msgs.get(0).getClass());
-		Assert.assertEquals(5, msgs.get(0).id);
-		Assert.assertEquals(2, ((DeviceList) msgs.get(0)).devices.length);
+		Assert.assertEquals(5, msgs.get(0).getId());
+		Assert.assertEquals(2, ((DeviceList) msgs.get(0)).getDevices().length);
 
-		final DeviceMessageInfo[] devs = ((DeviceList) msgs.get(0)).devices;
-		Assert.assertEquals(2, devs[0].deviceIndex);
-		Assert.assertEquals("foo", devs[0].deviceName);
-		Assert.assertArrayEquals(new String[] { "foo-cmd-1", "foo-cmd-2" }, devs[0].deviceMessages);
+		final DeviceMessageInfo[] devs = ((DeviceList) msgs.get(0)).getDevices();
+		Assert.assertEquals(2, devs[0].getDeviceIndex());
+		Assert.assertEquals("foo", devs[0].getDeviceName());
+		Assert.assertArrayEquals(new String[] { "foo-cmd-1", "foo-cmd-2" }, devs[0].getDeviceMessages());
 
-		Assert.assertEquals(4, devs[1].deviceIndex);
-		Assert.assertEquals("bar", devs[1].deviceName);
-		Assert.assertArrayEquals(new String[] { "bar-cmd-1", "bar-cmd-2" }, devs[1].deviceMessages);
+		Assert.assertEquals(4, devs[1].getDeviceIndex());
+		Assert.assertEquals("bar", devs[1].getDeviceName());
+		Assert.assertArrayEquals(new String[] { "bar-cmd-1", "bar-cmd-2" }, devs[1].getDeviceMessages());
 
 		String jsonOut = parser.formatJson(msgs);
 		Assert.assertEquals(testStr, jsonOut);

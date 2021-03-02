@@ -8,31 +8,28 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class VorzeA10CycloneCmd extends ButtplugDeviceMessage {
 
 	@JsonProperty(value = "Clockwise", required = true)
-	public boolean clockwise;
+	private boolean clockwise;
 	@JsonProperty(value = "Speed", required = true)
 	private int speed;
 
+	public VorzeA10CycloneCmd() {
+		this(-1, 0, false, ButtplugConsts.DefaultMsgId);
+	}
+
 	public VorzeA10CycloneCmd(final long deviceIndex, final int speed, final boolean clockwise, final long id) {
 		super(id, deviceIndex);
-		this.SetSpeed(speed);
+		this.setSpeed(speed);
 		this.clockwise = clockwise;
 	}
 
-	@SuppressWarnings("unused")
-	private VorzeA10CycloneCmd() {
-		super(ButtplugConsts.DefaultMsgId, -1);
-		this.SetSpeed(0);
-		this.clockwise = false;
-	}
-
-	public int GetSpeed() {
+	public int getSpeed() {
 		if (this.speed > 99 || this.speed < 0) {
 			return 0;
 		}
 		return this.speed;
 	}
 
-	public void SetSpeed(final int speed) {
+	public void setSpeed(final int speed) {
 		if (speed > 99) {
 			throw new IllegalArgumentException("VorzeA10CycloneCmd cannot have a speed higher than 99!");
 		}
@@ -42,5 +39,13 @@ public class VorzeA10CycloneCmd extends ButtplugDeviceMessage {
 		}
 
 		this.speed = speed;
+	}
+
+	public boolean isClockwise() {
+		return this.clockwise;
+	}
+
+	public void setClockwise(final boolean clockwise) {
+		this.clockwise = clockwise;
 	}
 }

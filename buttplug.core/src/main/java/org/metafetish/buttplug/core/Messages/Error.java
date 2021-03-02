@@ -10,24 +10,37 @@ public class Error extends ButtplugMessage {
 
 	@JsonProperty(value = "ErrorCode", required = true)
 	@JsonFormat(shape = JsonFormat.Shape.NUMBER)
-	public ErrorClass errorCode;
+	private ErrorType errorCode;
 	@JsonProperty(value = "ErrorMessage", required = true)
-	public String errorMessage;
+	private String errorMessage;
 
-	public Error(final String errorMessage, final ErrorClass errorCode, final long id) {
+	public Error() {
+		this("", ErrorType.ERROR_UNKNOWN, ButtplugConsts.DefaultMsgId);
+	}
+
+	public Error(final String errorMessage, final ErrorType errorCode, final long id) {
 		super(id);
 		this.errorMessage = errorMessage;
 		this.errorCode = errorCode;
 	}
 
-	@SuppressWarnings("unused")
-	private Error() {
-		super(ButtplugConsts.DefaultMsgId);
-		this.errorMessage = "";
-		this.errorCode = ErrorClass.ERROR_UNKNOWN;
+	public ErrorType getErrorCode() {
+		return this.errorCode;
 	}
 
-	public enum ErrorClass {
+	public void setErrorCode(final ErrorType errorCode) {
+		this.errorCode = errorCode;
+	}
+
+	public String getErrorMessage() {
+		return this.errorMessage;
+	}
+
+	public void setErrorMessage(final String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+
+	public enum ErrorType {
 		ERROR_UNKNOWN, ERROR_INIT, ERROR_PING, ERROR_MSG, ERROR_DEVICE,
 	}
 }

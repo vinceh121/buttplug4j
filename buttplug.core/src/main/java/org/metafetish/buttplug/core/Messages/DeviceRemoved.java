@@ -4,12 +4,11 @@ import org.metafetish.buttplug.core.ButtplugConsts;
 import org.metafetish.buttplug.core.ButtplugDeviceMessage;
 
 public class DeviceRemoved extends ButtplugDeviceMessage {
-	public DeviceRemoved(final long deviceMessage) {
-		super(ButtplugConsts.SystemMsgId, deviceMessage);
+	public DeviceRemoved() {
+		this(-1);
 	}
 
-	@SuppressWarnings("unused")
-	private DeviceRemoved() {
-		super(ButtplugConsts.SystemMsgId, -1);
+	public DeviceRemoved(final long deviceMessage) {
+		super(ButtplugConsts.SYSTEM_MSG_ID, deviceMessage);
 	}
 }

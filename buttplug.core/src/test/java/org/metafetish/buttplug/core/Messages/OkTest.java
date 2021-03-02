@@ -19,7 +19,7 @@ public class OkTest {
 
 		Assert.assertEquals(1, msgs.size());
 		Assert.assertEquals(Ok.class, msgs.get(0).getClass());
-		Assert.assertEquals(3, msgs.get(0).id);
+		Assert.assertEquals(3, msgs.get(0).getId());
 
 		String jsonOut = parser.formatJson(msgs);
 		Assert.assertEquals(testStr, jsonOut);

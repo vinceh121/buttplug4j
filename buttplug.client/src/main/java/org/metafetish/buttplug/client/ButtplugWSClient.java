@@ -48,28 +48,25 @@ import com.neovisionaries.ws.client.WebSocketFactory;
 
 public class ButtplugWSClient extends WebSocketAdapter {
 
-	public IDeviceEvent deviceAdded;
-
-	public IDeviceEvent deviceRemoved;
-	public IScanningEvent scanningFinished;
-	public IErrorEvent erorReceived;
-	public ILogEvent logReceived;
+	private IDeviceEvent deviceAdded;
+	private IDeviceEvent deviceRemoved;
+	private IScanningEvent scanningFinished;
+	private IErrorEvent erorReceived;
+	private ILogEvent logReceived;
 
 	private WebSocket websocket;
-	private final ButtplugJsonMessageParser _parser;
-	private final Object sendLock = new Object();
-	private final String _clientName;
-	private int _messageSchemaVersion;
-	private final ConcurrentHashMap<Long, SettableListenableFuture<ButtplugMessage>> _waitingMsgs
+	private final ButtplugJsonMessageParser parser;
+	private final String clientName;
+	private final ConcurrentHashMap<Long, SettableListenableFuture<ButtplugMessage>> waitingMsgs
 			= new ConcurrentHashMap<>();
-	private final ConcurrentHashMap<Long, ButtplugClientDevice> _devices = new ConcurrentHashMap<>();
+	private final ConcurrentHashMap<Long, ButtplugClientDevice> devices = new ConcurrentHashMap<>();
 
-	private Timer _pingTimer;
+	private Timer pingTimer;
 	private final AtomicLong msgId = new AtomicLong(1);
 
 	public ButtplugWSClient(final String aClientName) {
-		this._clientName = aClientName;
-		this._parser = new ButtplugJsonMessageParser();
+		this.clientName = aClientName;
+		this.parser = new ButtplugJsonMessageParser();
 	}
 
 	public long getNextMsgId() {
@@ -81,19 +78,17 @@ public class ButtplugWSClient extends WebSocketAdapter {
 	}
 
 	public void Connect(final URI url, final boolean trustAll) throws Exception {
-
-		this._waitingMsgs.clear();
-		this._devices.clear();
+		this.waitingMsgs.clear();
+		this.devices.clear();
 		this.msgId.set(1);
 
 		this.websocket = this.getWebSocket(url, trustAll);
 
-		final ButtplugMessage res
-				= this.sendMessage(new RequestServerInfo(this._clientName, this.getNextMsgId())).get();
+		final ButtplugMessage res = this.sendMessage(new RequestServerInfo(this.clientName, this.getNextMsgId())).get();
 		if (res instanceof ServerInfo) {
-			if (((ServerInfo) res).maxPingTime > 0) {
-				this._pingTimer = new Timer("pingTimer", true);
-				this._pingTimer.scheduleAtFixedRate(new TimerTask() {
+			if (((ServerInfo) res).getMaxPingTime() > 0) {
+				this.pingTimer = new Timer("pingTimer", true);
+				this.pingTimer.scheduleAtFixedRate(new TimerTask() {
 					@Override
 					public void run() {
 						try {
@@ -102,11 +97,11 @@ public class ButtplugWSClient extends WebSocketAdapter {
 							e.printStackTrace();
 						}
 					}
-				}, 0, Math.round((double) ((ServerInfo) res).maxPingTime / 2));
+				}, 0, Math.round((double) ((ServerInfo) res).getMaxPingTime() / 2));
 			}
 
 		} else if (res instanceof org.metafetish.buttplug.core.Messages.Error) {
-			throw new Exception(((org.metafetish.buttplug.core.Messages.Error) res).errorMessage);
+			throw new Exception(((org.metafetish.buttplug.core.Messages.Error) res).getErrorMessage());
 		} else {
 			throw new Exception("Unexpected message returned: " + res.getClass().getName());
 		}
@@ -116,16 +111,16 @@ public class ButtplugWSClient extends WebSocketAdapter {
 	 * public void onClose(int statusCode, String reason) {
 	 * this.session = null;
 	 * }
-	 * 
+	 *
 	 * //
 	 * public void onConnect(Session session) {
 	 * this.session = session;
 	 * }
 	 */
 	public void Disconnect() {
-		if (this._pingTimer != null) {
-			this._pingTimer.cancel();
-			this._pingTimer = null;
+		if (this.pingTimer != null) {
+			this.pingTimer.cancel();
+			this.pingTimer = null;
 		}
 
 		if (this.websocket != null) {
@@ -134,12 +129,12 @@ public class ButtplugWSClient extends WebSocketAdapter {
 		}
 
 		int max = 3;
-		while (max-- > 0 && this._waitingMsgs.size() != 0) {
-			for (final long msgId : this._waitingMsgs.keySet()) {
-				final SettableListenableFuture<ButtplugMessage> val = this._waitingMsgs.remove(msgId);
+		while (max-- > 0 && this.waitingMsgs.size() != 0) {
+			for (final long msgId : this.waitingMsgs.keySet()) {
+				final SettableListenableFuture<ButtplugMessage> val = this.waitingMsgs.remove(msgId);
 				if (val != null) {
-					val.set(new Error("Connection closed!", Error.ErrorClass.ERROR_UNKNOWN,
-							ButtplugConsts.SystemMsgId));
+					val.set(new Error("Connection closed!", Error.ErrorType.ERROR_UNKNOWN,
+							ButtplugConsts.SYSTEM_MSG_ID));
 				}
 			}
 		}
@@ -149,11 +144,11 @@ public class ButtplugWSClient extends WebSocketAdapter {
 	@Override
 	public void onTextMessage(final WebSocket socket, final String buf) {
 		try {
-			final List<ButtplugMessage> msgs = this._parser.parseJson(buf);
+			final List<ButtplugMessage> msgs = this.parser.parseJson(buf);
 
 			for (final ButtplugMessage msg : msgs) {
-				if (msg.id > 0) {
-					final SettableListenableFuture<ButtplugMessage> val = this._waitingMsgs.remove(msg.id);
+				if (msg.getId() > 0) {
+					final SettableListenableFuture<ButtplugMessage> val = this.waitingMsgs.remove(msg.getId());
 					if (val != null) {
 						val.set(msg);
 						continue;
@@ -166,28 +161,27 @@ public class ButtplugWSClient extends WebSocketAdapter {
 					}
 				} else if (msg instanceof DeviceAdded) {
 					final ButtplugClientDevice device = new ButtplugClientDevice((DeviceAdded) msg);
-					this._devices.put(((DeviceAdded) msg).deviceIndex, device);
+					this.devices.put(((DeviceAdded) msg).getDeviceIndex(), device);
 					if (this.deviceAdded != null) {
 						this.deviceAdded.deviceAdded(device);
 					}
 				} else if (msg instanceof DeviceRemoved) {
-					if ((this._devices.remove(((DeviceRemoved) msg).deviceIndex) != null)
-							&& (this.deviceRemoved != null)) {
-						this.deviceRemoved.deviceRemoved(((DeviceRemoved) msg).deviceIndex);
+					if (this.devices.remove(((DeviceRemoved) msg).getDeviceIndex()) != null
+							&& this.deviceRemoved != null) {
+						this.deviceRemoved.deviceRemoved(((DeviceRemoved) msg).getDeviceIndex());
 					}
 				} else if (msg instanceof ScanningFinished) {
 					if (this.scanningFinished != null) {
 						this.scanningFinished.scanningFinished();
 					}
-				} else if ((msg instanceof org.metafetish.buttplug.core.Messages.Error)
-						&& (this.erorReceived != null)) {
+				} else if (msg instanceof org.metafetish.buttplug.core.Messages.Error && this.erorReceived != null) {
 					this.erorReceived.errorReceived((org.metafetish.buttplug.core.Messages.Error) msg);
 				}
 			}
 		} catch (final IOException e) {
 			if (this.erorReceived != null) {
 				this.erorReceived.errorReceived(new org.metafetish.buttplug.core.Messages.Error(e.getMessage(),
-						Error.ErrorClass.ERROR_UNKNOWN, ButtplugConsts.SystemMsgId));
+						Error.ErrorType.ERROR_UNKNOWN, ButtplugConsts.SYSTEM_MSG_ID));
 			} else {
 				e.printStackTrace();
 			}
@@ -198,7 +192,7 @@ public class ButtplugWSClient extends WebSocketAdapter {
 		try {
 			final ButtplugMessage msg = this.sendMessage(new Ping(this.msgId.incrementAndGet())).get();
 			if (msg instanceof org.metafetish.buttplug.core.Messages.Error) {
-				throw new Exception(((org.metafetish.buttplug.core.Messages.Error) msg).errorMessage);
+				throw new Exception(((org.metafetish.buttplug.core.Messages.Error) msg).getErrorMessage());
 			}
 		} catch (final Throwable e) {
 			if (this.websocket != null) {
@@ -211,17 +205,17 @@ public class ButtplugWSClient extends WebSocketAdapter {
 
 	public void requestDeviceList() throws Exception {
 		final ButtplugMessage res = this.sendMessage(new RequestDeviceList(this.msgId.incrementAndGet())).get();
-		if (!(res instanceof DeviceList) || ((DeviceList) res).devices == null) {
+		if (!(res instanceof DeviceList) || ((DeviceList) res).getDevices() == null) {
 			if (res instanceof org.metafetish.buttplug.core.Messages.Error) {
-				throw new Exception(((org.metafetish.buttplug.core.Messages.Error) res).errorMessage);
+				throw new Exception(((org.metafetish.buttplug.core.Messages.Error) res).getErrorMessage());
 			}
 			return;
 		}
 
-		for (final DeviceMessageInfo d : ((DeviceList) res).devices) {
-			if (!this._devices.containsKey(d.deviceIndex)) {
+		for (final DeviceMessageInfo d : ((DeviceList) res).getDevices()) {
+			if (!this.devices.containsKey(d.getDeviceIndex())) {
 				final ButtplugClientDevice device = new ButtplugClientDevice(d);
-				if ((this._devices.put(d.deviceIndex, device) == null) && (this.deviceAdded != null)) {
+				if (this.devices.put(d.getDeviceIndex(), device) == null && this.deviceAdded != null) {
 					this.deviceAdded.deviceAdded(device);
 				}
 			}
@@ -229,7 +223,7 @@ public class ButtplugWSClient extends WebSocketAdapter {
 	}
 
 	public List<ButtplugClientDevice> getDevices() {
-		final List<ButtplugClientDevice> devices = new ArrayList<>(this._devices.values());
+		final List<ButtplugClientDevice> devices = new ArrayList<>(this.devices.values());
 		return devices;
 	}
 
@@ -253,22 +247,22 @@ public class ButtplugWSClient extends WebSocketAdapter {
 	public ListenableFuture<ButtplugMessage> sendDeviceMessage(final ButtplugClientDevice device,
 			final ButtplugDeviceMessage deviceMsg) throws ExecutionException, InterruptedException, IOException {
 		final SettableListenableFuture<ButtplugMessage> promise = new SettableListenableFuture<>();
-		final ButtplugClientDevice dev = this._devices.get(device.index);
+		final ButtplugClientDevice dev = this.devices.get(device.getIndex());
 		if (dev != null) {
-			if (!dev.allowedMessages.contains(deviceMsg.getClass().getSimpleName())) {
+			if (!dev.getAllowedMessages().contains(deviceMsg.getClass().getSimpleName())) {
 				promise.set(new org.metafetish.buttplug.core.Messages.Error(
 						"Device does not accept message type: " + deviceMsg.getClass().getSimpleName(),
-						org.metafetish.buttplug.core.Messages.Error.ErrorClass.ERROR_DEVICE,
-						ButtplugConsts.SystemMsgId));
+						org.metafetish.buttplug.core.Messages.Error.ErrorType.ERROR_DEVICE,
+						ButtplugConsts.SYSTEM_MSG_ID));
 				return promise;
 			}
 
-			deviceMsg.deviceIndex = device.index;
-			deviceMsg.id = this.msgId.incrementAndGet();
+			deviceMsg.setDeviceIndex(device.getIndex());
+			deviceMsg.setId(this.msgId.incrementAndGet());
 			return this.sendMessage(deviceMsg);
 		} else {
 			promise.set(new org.metafetish.buttplug.core.Messages.Error("Device not available.",
-					org.metafetish.buttplug.core.Messages.Error.ErrorClass.ERROR_DEVICE, ButtplugConsts.SystemMsgId));
+					org.metafetish.buttplug.core.Messages.Error.ErrorType.ERROR_DEVICE, ButtplugConsts.SYSTEM_MSG_ID));
 			return promise;
 		}
 	}
@@ -282,19 +276,19 @@ public class ButtplugWSClient extends WebSocketAdapter {
 			throws ExecutionException, InterruptedException, IOException {
 		final SettableListenableFuture<ButtplugMessage> promise = new SettableListenableFuture<>();
 
-		this._waitingMsgs.put(msg.id, promise);
+		this.waitingMsgs.put(msg.getId(), promise);
 		if (this.websocket == null) {
-			promise.set(new org.metafetish.buttplug.core.Messages.Error("Bad WS state!", Error.ErrorClass.ERROR_UNKNOWN,
-					ButtplugConsts.SystemMsgId));
+			promise.set(new org.metafetish.buttplug.core.Messages.Error("Bad WS state!", Error.ErrorType.ERROR_UNKNOWN,
+					ButtplugConsts.SYSTEM_MSG_ID));
 			return promise;
 		}
 
 		try {
-			this.websocket.sendText(this._parser.formatJson(msg));
+			this.websocket.sendText(this.parser.formatJson(msg));
 			this.websocket.flush();
 		} catch (final IOException e) {
 			promise.set(new org.metafetish.buttplug.core.Messages.Error(e.getMessage(),
-					org.metafetish.buttplug.core.Messages.Error.ErrorClass.ERROR_UNKNOWN, msg.id));
+					org.metafetish.buttplug.core.Messages.Error.ErrorType.ERROR_UNKNOWN, msg.getId()));
 		}
 
 		return promise;
@@ -302,7 +296,7 @@ public class ButtplugWSClient extends WebSocketAdapter {
 
 	protected WebSocket getWebSocket(final URI url, final boolean trustAll)
 			throws IOException, WebSocketException, NoSuchAlgorithmException, KeyManagementException {
-		SSLContext context = SSLContext.getDefault();
+		final SSLContext context;
 		if (trustAll) {
 			context = SSLContext.getInstance("TLS");
 			context.init(null, new TrustManager[] { new X509TrustManager() {
@@ -319,6 +313,8 @@ public class ButtplugWSClient extends WebSocketAdapter {
 				public void checkServerTrusted(final X509Certificate[] certs, final String authType) {
 				}
 			} }, null);
+		} else {
+			context = SSLContext.getDefault();
 		}
 		return new WebSocketFactory().setSSLContext(context)
 				.setConnectionTimeout(2000)
@@ -326,5 +322,45 @@ public class ButtplugWSClient extends WebSocketAdapter {
 				.addListener(this)
 				.addExtension(WebSocketExtension.PERMESSAGE_DEFLATE)
 				.connect();
+	}
+
+	public IDeviceEvent getDeviceAdded() {
+		return this.deviceAdded;
+	}
+
+	public void setDeviceAdded(final IDeviceEvent deviceAdded) {
+		this.deviceAdded = deviceAdded;
+	}
+
+	public IDeviceEvent getDeviceRemoved() {
+		return this.deviceRemoved;
+	}
+
+	public void setDeviceRemoved(final IDeviceEvent deviceRemoved) {
+		this.deviceRemoved = deviceRemoved;
+	}
+
+	public IScanningEvent getScanningFinished() {
+		return this.scanningFinished;
+	}
+
+	public void setScanningFinished(final IScanningEvent scanningFinished) {
+		this.scanningFinished = scanningFinished;
+	}
+
+	public IErrorEvent getErorReceived() {
+		return this.erorReceived;
+	}
+
+	public void setErorReceived(final IErrorEvent erorReceived) {
+		this.erorReceived = erorReceived;
+	}
+
+	public ILogEvent getLogReceived() {
+		return this.logReceived;
+	}
+
+	public void setLogReceived(final ILogEvent logReceived) {
+		this.logReceived = logReceived;
 	}
 }

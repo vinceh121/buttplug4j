@@ -7,22 +7,26 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ServerInfo extends ButtplugMessage {
 	@JsonProperty(value = "MajorVersion", required = true)
-	public int majorVersion;
+	private int majorVersion = 0;
 
 	@JsonProperty(value = "MinorVersion", required = true)
-	public int minorVersion;
+	private int minorVersion = 0;
 
 	@JsonProperty(value = "BuildVersion", required = true)
-	public int buildVersion;
+	private int buildVersion = 1;
 
 	@JsonProperty(value = "MessageVersion", required = true)
-	public int messageVersion;
+	private int messageVersion;
 
 	@JsonProperty(value = "MaxPingTime", required = true)
-	public long maxPingTime;
+	private long maxPingTime;
 
 	@JsonProperty(value = "ServerName", required = true)
-	public String serverName;
+	private String serverName;
+
+	public ServerInfo() {
+		this("", 1, 0, ButtplugConsts.DefaultMsgId);
+	}
 
 	public ServerInfo(final String serverName, final int messageVersion, final long maxPingTime, final long id) {
 		super(id);
@@ -30,20 +34,53 @@ public class ServerInfo extends ButtplugMessage {
 		this.serverName = serverName;
 		this.messageVersion = messageVersion;
 		this.maxPingTime = maxPingTime;
-		this.majorVersion = 0;
-		this.minorVersion = 0;
-		this.buildVersion = 1;
 	}
 
-	@SuppressWarnings("unused")
-	private ServerInfo() {
-		super(ButtplugConsts.DefaultMsgId);
+	public int getMajorVersion() {
+		return this.majorVersion;
+	}
 
-		this.serverName = "";
-		this.messageVersion = 1;
-		this.maxPingTime = 0;
-		this.majorVersion = 0;
-		this.minorVersion = 0;
-		this.buildVersion = 1;
+	public void setMajorVersion(final int majorVersion) {
+		this.majorVersion = majorVersion;
+	}
+
+	public int getMinorVersion() {
+		return this.minorVersion;
+	}
+
+	public void setMinorVersion(final int minorVersion) {
+		this.minorVersion = minorVersion;
+	}
+
+	public int getBuildVersion() {
+		return this.buildVersion;
+	}
+
+	public void setBuildVersion(final int buildVersion) {
+		this.buildVersion = buildVersion;
+	}
+
+	public int getMessageVersion() {
+		return this.messageVersion;
+	}
+
+	public void setMessageVersion(final int messageVersion) {
+		this.messageVersion = messageVersion;
+	}
+
+	public long getMaxPingTime() {
+		return this.maxPingTime;
+	}
+
+	public void setMaxPingTime(final long maxPingTime) {
+		this.maxPingTime = maxPingTime;
+	}
+
+	public String getServerName() {
+		return this.serverName;
+	}
+
+	public void setServerName(final String serverName) {
+		this.serverName = serverName;
 	}
 }

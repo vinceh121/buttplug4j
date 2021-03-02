@@ -19,9 +19,9 @@ public class KiirooCmdTest {
 
 		Assert.assertEquals(msgs.size(), 1);
 		Assert.assertEquals(msgs.get(0).getClass(), KiirooCmd.class);
-		Assert.assertEquals(msgs.get(0).id, 7);
-		Assert.assertEquals(((KiirooCmd) msgs.get(0)).deviceIndex, 3);
-		Assert.assertEquals(((KiirooCmd) msgs.get(0)).deviceCmd, "4;");
+		Assert.assertEquals(msgs.get(0).getId(), 7);
+		Assert.assertEquals(((KiirooCmd) msgs.get(0)).getDeviceIndex(), 3);
+		Assert.assertEquals(((KiirooCmd) msgs.get(0)).getDeviceCmd(), "4;");
 
 		String jsonOut = parser.formatJson(msgs);
 		Assert.assertEquals(testStr, jsonOut);

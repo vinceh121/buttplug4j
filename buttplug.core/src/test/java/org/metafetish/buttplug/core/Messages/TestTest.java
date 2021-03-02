@@ -19,7 +19,7 @@ public class TestTest {
 
 		Assert.assertEquals(msgs.size(), 1);
 		Assert.assertEquals(msgs.get(0).getClass(), org.metafetish.buttplug.core.Messages.Test.class);
-		Assert.assertEquals(msgs.get(0).id, 7);
+		Assert.assertEquals(msgs.get(0).getId(), 7);
 		Assert.assertEquals(((org.metafetish.buttplug.core.Messages.Test) msgs.get(0)).getTestString(), "TestText");
 
 		String jsonOut = parser.formatJson(msgs);

@@ -19,7 +19,7 @@ public class PingTest {
 
 		Assert.assertEquals(msgs.size(), 1);
 		Assert.assertEquals(msgs.get(0).getClass(), Ping.class);
-		Assert.assertEquals(msgs.get(0).id, 4);
+		Assert.assertEquals(msgs.get(0).getId(), 4);
 
 		String jsonOut = parser.formatJson(msgs);
 		Assert.assertEquals(testStr, jsonOut);

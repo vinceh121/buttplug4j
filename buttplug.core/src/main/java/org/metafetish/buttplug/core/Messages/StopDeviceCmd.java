@@ -5,12 +5,11 @@ import org.metafetish.buttplug.core.ButtplugDeviceMessage;
 
 public class StopDeviceCmd extends ButtplugDeviceMessage {
 
-	public StopDeviceCmd(final long deviceIndex, final long id) {
-		super(id, deviceIndex);
+	public StopDeviceCmd() {
+		super(ButtplugConsts.DefaultMsgId, -1);
 	}
 
-	@SuppressWarnings("unused")
-	private StopDeviceCmd() {
-		super(ButtplugConsts.DefaultMsgId, -1);
+	public StopDeviceCmd(final long deviceIndex, final long id) {
+		super(id, deviceIndex);
 	}
 }

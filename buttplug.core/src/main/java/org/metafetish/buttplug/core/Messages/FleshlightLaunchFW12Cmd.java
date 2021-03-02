@@ -12,29 +12,27 @@ public class FleshlightLaunchFW12Cmd extends ButtplugDeviceMessage {
 	@JsonProperty(value = "Position", required = true)
 	private int position;
 
+	public FleshlightLaunchFW12Cmd() {
+		this(-1, 0, 0, ButtplugConsts.DefaultMsgId);
+		this.setSpeed(0);
+		this.getPosition(0);
+	}
+
 	public FleshlightLaunchFW12Cmd(final long deviceIndex, final int speed, final int position, final long id) {
 		super(id, deviceIndex);
 
-		this.SetSpeed(speed);
-		this.SetPosition(position);
+		this.setSpeed(speed);
+		this.getPosition(position);
 	}
 
-	@SuppressWarnings("unused")
-	private FleshlightLaunchFW12Cmd() {
-		super(ButtplugConsts.DefaultMsgId, -1);
-
-		this.SetSpeed(0);
-		this.SetPosition(0);
-	}
-
-	public int GetSpeed() {
+	public int getSpeed() {
 		if (this.speed > 99 || this.speed < 0) {
 			return 0;
 		}
 		return this.speed;
 	}
 
-	public void SetSpeed(final int speed) {
+	public void setSpeed(final int speed) {
 		if (speed > 99) {
 			throw new IllegalArgumentException("FleshlightLaunchFW12Cmd cannot have a speed higher than 99!");
 		}
@@ -46,14 +44,14 @@ public class FleshlightLaunchFW12Cmd extends ButtplugDeviceMessage {
 		this.speed = speed;
 	}
 
-	public int GetPosition() {
+	public int getPosition() {
 		if (this.position > 99 || this.position < 0) {
 			return 0;
 		}
 		return this.position;
 	}
 
-	public void SetPosition(final int position) {
+	public void getPosition(final int position) {
 		if (position > 99) {
 			throw new IllegalArgumentException("FleshlightLaunchFW12Cmd cannot have a position higher than 99!");
 		}

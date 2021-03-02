@@ -19,9 +19,9 @@ public class ErrorTest {
 
 		Assert.assertEquals(msgs.size(), 1);
 		Assert.assertEquals(msgs.get(0).getClass(), org.metafetish.buttplug.core.Messages.Error.class);
-		Assert.assertEquals(msgs.get(0).id, 7);
-		Assert.assertEquals(((Error) msgs.get(0)).errorMessage, "TestError");
-		Assert.assertEquals(((Error) msgs.get(0)).errorCode, Error.ErrorClass.ERROR_DEVICE);
+		Assert.assertEquals(msgs.get(0).getId(), 7);
+		Assert.assertEquals(((Error) msgs.get(0)).getErrorMessage(), "TestError");
+		Assert.assertEquals(((Error) msgs.get(0)).getErrorCode(), Error.ErrorType.ERROR_DEVICE);
 
 		String jsonOut = parser.formatJson(msgs);
 		Assert.assertEquals(testStr, jsonOut);

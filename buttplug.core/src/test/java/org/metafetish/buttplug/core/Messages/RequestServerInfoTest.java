@@ -19,8 +19,8 @@ public class RequestServerInfoTest {
 
 		Assert.assertEquals(msgs.size(), 1);
 		Assert.assertEquals(msgs.get(0).getClass(), RequestServerInfo.class);
-		Assert.assertEquals(msgs.get(0).id, 7);
-		Assert.assertEquals(((RequestServerInfo) msgs.get(0)).clientName, "UnitTest");
+		Assert.assertEquals(msgs.get(0).getId(), 7);
+		Assert.assertEquals(((RequestServerInfo) msgs.get(0)).getClientName(), "UnitTest");
 
 		String jsonOut = parser.formatJson(msgs);
 		Assert.assertEquals(testStr, jsonOut);

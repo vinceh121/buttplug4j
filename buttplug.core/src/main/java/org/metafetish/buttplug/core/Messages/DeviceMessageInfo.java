@@ -5,13 +5,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class DeviceMessageInfo {
 
 	@JsonProperty(value = "DeviceIndex", required = true)
-	public long deviceIndex;
+	private long deviceIndex;
 
 	@JsonProperty(value = "DeviceName", required = true)
-	public String deviceName;
+	private String deviceName;
 
 	@JsonProperty(value = "DeviceMessages", required = true)
-	public String[] deviceMessages;
+	private String[] deviceMessages;
+
+	public DeviceMessageInfo() {
+		this(-1, "", new String[0]);
+	}
 
 	public DeviceMessageInfo(final long deviceIndex, final String deviceName, final String[] deviceMessages) {
 		this.deviceName = deviceName;
@@ -19,10 +23,27 @@ public class DeviceMessageInfo {
 		this.deviceMessages = deviceMessages;
 	}
 
-	@SuppressWarnings("unused")
-	private DeviceMessageInfo() {
-		this.deviceName = "";
-		this.deviceIndex = -1;
-		this.deviceMessages = new String[] {};
+	public long getDeviceIndex() {
+		return this.deviceIndex;
+	}
+
+	public void setDeviceIndex(final long deviceIndex) {
+		this.deviceIndex = deviceIndex;
+	}
+
+	public String getDeviceName() {
+		return this.deviceName;
+	}
+
+	public void setDeviceName(final String deviceName) {
+		this.deviceName = deviceName;
+	}
+
+	public String[] getDeviceMessages() {
+		return this.deviceMessages;
+	}
+
+	public void setDeviceMessages(final String[] deviceMessages) {
+		this.deviceMessages = deviceMessages;
 	}
 }

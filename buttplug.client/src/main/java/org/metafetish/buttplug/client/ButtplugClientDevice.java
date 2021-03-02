@@ -9,27 +9,49 @@ import org.metafetish.buttplug.core.Messages.DeviceMessageInfo;
 import org.metafetish.buttplug.core.Messages.DeviceRemoved;
 
 public class ButtplugClientDevice {
-	public long index;
-
-	public String name;
-
-	public List<String> allowedMessages;
+	private long index;
+	private String name;
+	private List<String> allowedMessages;
 
 	public ButtplugClientDevice(final DeviceMessageInfo aDevInfo) {
-		this.index = aDevInfo.deviceIndex;
-		this.name = aDevInfo.deviceName;
-		this.allowedMessages = Arrays.asList(aDevInfo.deviceMessages);
+		this.index = aDevInfo.getDeviceIndex();
+		this.name = aDevInfo.getDeviceName();
+		this.allowedMessages = Arrays.asList(aDevInfo.getDeviceMessages());
 	}
 
 	public ButtplugClientDevice(final DeviceAdded aDevInfo) {
-		this.index = aDevInfo.deviceIndex;
-		this.name = aDevInfo.deviceName;
-		this.allowedMessages = Arrays.asList(aDevInfo.deviceMessages);
+		this.index = aDevInfo.getDeviceIndex();
+		this.name = aDevInfo.getDeviceName();
+		this.allowedMessages = Arrays.asList(aDevInfo.getDeviceMessages());
 	}
 
 	public ButtplugClientDevice(final DeviceRemoved aDevInfo) {
-		this.index = aDevInfo.deviceIndex;
+		this.index = aDevInfo.getDeviceIndex();
 		this.name = "";
 		this.allowedMessages = new ArrayList<>();
+	}
+
+	public long getIndex() {
+		return this.index;
+	}
+
+	public void setIndex(final long index) {
+		this.index = index;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(final String name) {
+		this.name = name;
+	}
+
+	public List<String> getAllowedMessages() {
+		return this.allowedMessages;
+	}
+
+	public void setAllowedMessages(final List<String> allowedMessages) {
+		this.allowedMessages = allowedMessages;
 	}
 }

@@ -8,16 +8,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class LovenseCmd extends ButtplugDeviceMessage {
 
 	@JsonProperty(value = "Command", required = true)
-	public String deviceCmd;
+	private String deviceCmd;
+
+	public LovenseCmd() {
+		this(-1, "", ButtplugConsts.DefaultMsgId);
+	}
 
 	public LovenseCmd(final long deviceIndex, final String deviceCmd, final long id) {
 		super(id, deviceIndex);
 		this.deviceCmd = deviceCmd;
 	}
 
-	@SuppressWarnings("unused")
-	private LovenseCmd() {
-		super(ButtplugConsts.DefaultMsgId, -1);
-		this.deviceCmd = "";
+	public String getDeviceCmd() {
+		return this.deviceCmd;
+	}
+
+	public void setDeviceCmd(final String deviceCmd) {
+		this.deviceCmd = deviceCmd;
 	}
 }

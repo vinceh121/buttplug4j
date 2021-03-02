@@ -19,8 +19,8 @@ public class StopDeviceCmdTest {
 
 		Assert.assertEquals(msgs.size(), 1);
 		Assert.assertEquals(msgs.get(0).getClass(), StopDeviceCmd.class);
-		Assert.assertEquals(msgs.get(0).id, 7);
-		Assert.assertEquals(((StopDeviceCmd) msgs.get(0)).deviceIndex, 3);
+		Assert.assertEquals(msgs.get(0).getId(), 7);
+		Assert.assertEquals(((StopDeviceCmd) msgs.get(0)).getDeviceIndex(), 3);
 
 		String jsonOut = parser.formatJson(msgs);
 		Assert.assertEquals(testStr, jsonOut);

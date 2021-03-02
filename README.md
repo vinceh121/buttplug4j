@@ -1,52 +1,39 @@
-# Buttplug - Java WebSocket Client Implementation
+# Buttplug4J - Java WebSocket Client Implementation
 
-[![Build Status](https://travis-ci.org/metafetish/buttplug4j.svg?branch=master)](https://travis-ci.org/metafetish/buttplug4j) [![codecov](https://codecov.io/gh/metafetish/buttplug4j/branch/master/graph/badge.svg)](https://codecov.io/gh/metafetish/buttplug4j) [![Patreon donate button](https://img.shields.io/badge/patreon-donate-yellow.svg)](https://www.patreon.com/qdot)
+Buttplug is a framework for hooking up hardware to interfaces, where hardware usually means sex toys, but could honestly be just about anything.
 
-Buttplug is a framework for hooking up hardware to interfaces, where
-hardware usually means sex toys, but could honestly be just about
-anything. It's basically a userland HID manager for things that may
-not specifically be HID.
-
-In more concrete terms, think of Buttplug as something like
-[osculator](http://www.osculator.net/) or [VRPN](http://vrpn.org), but
-for sex toys. Instead of wiimotes and control surfaces, we interface
-with vibrators, electrostim equipment, fucking machines, and other
-hardware that can communicate with computers.
-
-The core of buttplug works as a router. It is an application that
-connects to driver libraries, to register and communicate with
-different hardware. Clients can then connect over different means
-(network, websockets, etc...), to interact with the hardware.
+This repository contains a maintained version of the pure Java implementation of the Buttplug WebSocket protocol.
 
 ## Other Buttplug Implementations
 
 Buttplug implementations are available in multiple languages (c#, rust,
 javascript, etc)/frameworks/platforms. For a full
 list,
-[see the README in the main buttplug repo](http://github.com/metafetish/buttplug).
+[see the Buttplug organisation](http://github.com/buttplugio).
 
 ## Platform Support
 
-Buttplug Java should run on any 1.7 or later JRE (including Android).
+Buttplug Java should run on any 1.8 or later JRE (including Android).
 In depth testing is still pending, so your mileage may vary.
 
 ## Development
 
-Snapshot libraries from the buttplug4j repo are available via Maven from the following repository: https://packagecloud.io/blackspherefollower/buttplug4j/maven2
+Snapshot libraries from the buttplug4j repo are available using Jitpack:
 
 ```xml
 <repositories>
-  <repository>
-    <id>blackspherefollower-buttplug4j</id>
-    <url>https://packagecloud.io/blackspherefollower/buttplug4j/maven2</url>
-    <releases>
-      <enabled>true</enabled>
-    </releases>
-    <snapshots>
-      <enabled>true</enabled>
-    </snapshots>
-  </repository>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
 </repositories>
+<dependencies>
+	<dependency>
+			<groupId>com.github.vinceh121</groupId>
+			<artifactId>buttplug4j</artifactId>
+			<version>-SNAPSHOT</version>
+	</dependency>
+</dependencies>
 ```
 
 ## Support The Project

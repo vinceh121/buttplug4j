@@ -17,10 +17,12 @@ public class ButtplugJsonMessageParser {
 
 	public ButtplugJsonMessageParser() {
 		this.mapper = new ObjectMapper();
-		final TypeResolverBuilder<?> typer = new DefaultTypeResolverBuilder(DefaultTyping.OBJECT_AND_NON_CONCRETE,
+		TypeResolverBuilder<?> typer = DefaultTypeResolverBuilder.construct(DefaultTyping.JAVA_LANG_OBJECT,
 				this.mapper.getPolymorphicTypeValidator());
-		typer.init(JsonTypeInfo.Id.NAME, null);
-		typer.inclusion(As.WRAPPER_OBJECT);
+		// reassignment here because documentation says "Resulting builder instance
+		// (usually this builder, but not necessarily)"
+		typer = typer.init(JsonTypeInfo.Id.NAME, null);
+		typer = typer.inclusion(As.WRAPPER_OBJECT);
 		this.mapper.setDefaultTyping(typer);
 	}
 
@@ -34,5 +36,9 @@ public class ButtplugJsonMessageParser {
 
 	public String formatJson(final ButtplugMessage msgs) throws IOException {
 		return this.mapper.writeValueAsString(new ButtplugMessage[] { msgs });
+	}
+
+	public ObjectMapper getMapper() {
+		return mapper;
 	}
 }

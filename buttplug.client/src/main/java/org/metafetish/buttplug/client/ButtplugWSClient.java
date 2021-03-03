@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicLong;
@@ -37,8 +38,6 @@ import org.metafetish.buttplug.core.messages.ServerInfo;
 import org.metafetish.buttplug.core.messages.StartScanning;
 import org.metafetish.buttplug.core.messages.StopAllDevices;
 import org.metafetish.buttplug.core.messages.StopScanning;
-import org.springframework.util.concurrent.ListenableFuture;
-import org.springframework.util.concurrent.SettableListenableFuture;
 
 import com.neovisionaries.ws.client.WebSocket;
 import com.neovisionaries.ws.client.WebSocketAdapter;
@@ -57,8 +56,7 @@ public class ButtplugWSClient extends WebSocketAdapter {
 	private WebSocket websocket;
 	private final ButtplugJsonMessageParser parser;
 	private final String clientName;
-	private final ConcurrentHashMap<Long, SettableListenableFuture<ButtplugMessage>> waitingMsgs
-			= new ConcurrentHashMap<>();
+	private final ConcurrentHashMap<Long, CompletableFuture<ButtplugMessage>> waitingMsgs = new ConcurrentHashMap<>();
 	private final ConcurrentHashMap<Long, ButtplugClientDevice> devices = new ConcurrentHashMap<>();
 
 	private Timer pingTimer;
@@ -131,9 +129,9 @@ public class ButtplugWSClient extends WebSocketAdapter {
 		int max = 3;
 		while (max-- > 0 && this.waitingMsgs.size() != 0) {
 			for (final long msgId : this.waitingMsgs.keySet()) {
-				final SettableListenableFuture<ButtplugMessage> val = this.waitingMsgs.remove(msgId);
+				final CompletableFuture<ButtplugMessage> val = this.waitingMsgs.remove(msgId);
 				if (val != null) {
-					val.set(new Error("Connection closed!", Error.ErrorType.ERROR_UNKNOWN,
+					val.complete(new Error("Connection closed!", Error.ErrorType.ERROR_UNKNOWN,
 							ButtplugConsts.SYSTEM_MSG_ID));
 				}
 			}
@@ -148,9 +146,9 @@ public class ButtplugWSClient extends WebSocketAdapter {
 
 			for (final ButtplugMessage msg : msgs) {
 				if (msg.getId() > 0) {
-					final SettableListenableFuture<ButtplugMessage> val = this.waitingMsgs.remove(msg.getId());
+					final CompletableFuture<ButtplugMessage> val = this.waitingMsgs.remove(msg.getId());
 					if (val != null) {
-						val.set(msg);
+						val.complete(msg);
 						continue;
 					}
 				}
@@ -244,13 +242,13 @@ public class ButtplugWSClient extends WebSocketAdapter {
 		return this.sendMessageExpectOk(new RequestLog(aLogLevel, this.msgId.getAndIncrement()));
 	}
 
-	public ListenableFuture<ButtplugMessage> sendDeviceMessage(final ButtplugClientDevice device,
+	public CompletableFuture<ButtplugMessage> sendDeviceMessage(final ButtplugClientDevice device,
 			final ButtplugDeviceMessage deviceMsg) throws ExecutionException, InterruptedException, IOException {
-		final SettableListenableFuture<ButtplugMessage> promise = new SettableListenableFuture<>();
+		final CompletableFuture<ButtplugMessage> promise = new CompletableFuture<>();
 		final ButtplugClientDevice dev = this.devices.get(device.getIndex());
 		if (dev != null) {
 			if (!dev.getAllowedMessages().contains(deviceMsg.getClass().getSimpleName())) {
-				promise.set(new org.metafetish.buttplug.core.messages.Error(
+				promise.complete(new org.metafetish.buttplug.core.messages.Error(
 						"Device does not accept message type: " + deviceMsg.getClass().getSimpleName(),
 						org.metafetish.buttplug.core.messages.Error.ErrorType.ERROR_DEVICE,
 						ButtplugConsts.SYSTEM_MSG_ID));
@@ -261,7 +259,7 @@ public class ButtplugWSClient extends WebSocketAdapter {
 			deviceMsg.setId(this.msgId.incrementAndGet());
 			return this.sendMessage(deviceMsg);
 		} else {
-			promise.set(new org.metafetish.buttplug.core.messages.Error("Device not available.",
+			promise.complete(new org.metafetish.buttplug.core.messages.Error("Device not available.",
 					org.metafetish.buttplug.core.messages.Error.ErrorType.ERROR_DEVICE, ButtplugConsts.SYSTEM_MSG_ID));
 			return promise;
 		}
@@ -272,14 +270,14 @@ public class ButtplugWSClient extends WebSocketAdapter {
 		return this.sendMessage(msg).get() instanceof Ok;
 	}
 
-	protected ListenableFuture<ButtplugMessage> sendMessage(final ButtplugMessage msg)
+	protected CompletableFuture<ButtplugMessage> sendMessage(final ButtplugMessage msg)
 			throws ExecutionException, InterruptedException, IOException {
-		final SettableListenableFuture<ButtplugMessage> promise = new SettableListenableFuture<>();
+		final CompletableFuture<ButtplugMessage> promise = new CompletableFuture<>();
 
 		this.waitingMsgs.put(msg.getId(), promise);
 		if (this.websocket == null) {
-			promise.set(new org.metafetish.buttplug.core.messages.Error("Bad WS state!", Error.ErrorType.ERROR_UNKNOWN,
-					ButtplugConsts.SYSTEM_MSG_ID));
+			promise.complete(new org.metafetish.buttplug.core.messages.Error("Bad WS state!",
+					Error.ErrorType.ERROR_UNKNOWN, ButtplugConsts.SYSTEM_MSG_ID));
 			return promise;
 		}
 
@@ -287,7 +285,7 @@ public class ButtplugWSClient extends WebSocketAdapter {
 			this.websocket.sendText(this.parser.formatJson(msg));
 			this.websocket.flush();
 		} catch (final IOException e) {
-			promise.set(new org.metafetish.buttplug.core.messages.Error(e.getMessage(),
+			promise.complete(new org.metafetish.buttplug.core.messages.Error(e.getMessage(),
 					org.metafetish.buttplug.core.messages.Error.ErrorType.ERROR_UNKNOWN, msg.getId()));
 		}
 

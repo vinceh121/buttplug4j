@@ -27,11 +27,9 @@ import org.metafetish.buttplug.core.messages.DeviceList;
 import org.metafetish.buttplug.core.messages.DeviceMessageInfo;
 import org.metafetish.buttplug.core.messages.DeviceRemoved;
 import org.metafetish.buttplug.core.messages.Error;
-import org.metafetish.buttplug.core.messages.Log;
 import org.metafetish.buttplug.core.messages.Ok;
 import org.metafetish.buttplug.core.messages.Ping;
 import org.metafetish.buttplug.core.messages.RequestDeviceList;
-import org.metafetish.buttplug.core.messages.RequestLog;
 import org.metafetish.buttplug.core.messages.RequestServerInfo;
 import org.metafetish.buttplug.core.messages.ScanningFinished;
 import org.metafetish.buttplug.core.messages.ServerInfo;
@@ -51,7 +49,6 @@ public class ButtplugWSClient extends WebSocketAdapter {
 	private IDeviceEvent deviceRemoved;
 	private IScanningEvent scanningFinished;
 	private IErrorEvent erorReceived;
-	private ILogEvent logReceived;
 
 	private WebSocket websocket;
 	private final ButtplugJsonMessageParser parser;
@@ -82,7 +79,8 @@ public class ButtplugWSClient extends WebSocketAdapter {
 
 		this.websocket = this.getWebSocket(url, trustAll);
 
-		final ButtplugMessage res = this.sendMessage(new RequestServerInfo(this.clientName, this.getNextMsgId())).get();
+		final ButtplugMessage res
+				= this.sendMessage(new RequestServerInfo(this.clientName, 0, this.getNextMsgId())).get();
 		if (res instanceof ServerInfo) {
 			if (((ServerInfo) res).getMaxPingTime() > 0) {
 				this.pingTimer = new Timer("pingTimer", true);
@@ -153,11 +151,7 @@ public class ButtplugWSClient extends WebSocketAdapter {
 					}
 				}
 
-				if (msg instanceof Log) {
-					if (this.logReceived != null) {
-						this.logReceived.logReceived((Log) msg);
-					}
-				} else if (msg instanceof DeviceAdded) {
+				if (msg instanceof DeviceAdded) {
 					final ButtplugClientDevice device = new ButtplugClientDevice((DeviceAdded) msg);
 					this.devices.put(((DeviceAdded) msg).getDeviceIndex(), device);
 					if (this.deviceAdded != null) {
@@ -237,17 +231,12 @@ public class ButtplugWSClient extends WebSocketAdapter {
 		return this.sendMessageExpectOk(new StopAllDevices(this.msgId.incrementAndGet()));
 	}
 
-	public boolean requestLog(final RequestLog.ButtplugLogLevel aLogLevel)
-			throws ExecutionException, InterruptedException, IOException {
-		return this.sendMessageExpectOk(new RequestLog(aLogLevel, this.msgId.getAndIncrement()));
-	}
-
 	public CompletableFuture<ButtplugMessage> sendDeviceMessage(final ButtplugClientDevice device,
 			final ButtplugDeviceMessage deviceMsg) throws ExecutionException, InterruptedException, IOException {
 		final CompletableFuture<ButtplugMessage> promise = new CompletableFuture<>();
 		final ButtplugClientDevice dev = this.devices.get(device.getIndex());
 		if (dev != null) {
-			if (!dev.getAllowedMessages().contains(deviceMsg.getClass().getSimpleName())) {
+			if (!dev.getAllowedMessages().containsKey(deviceMsg.getClass().getSimpleName())) {
 				promise.complete(new org.metafetish.buttplug.core.messages.Error(
 						"Device does not accept message type: " + deviceMsg.getClass().getSimpleName(),
 						org.metafetish.buttplug.core.messages.Error.ErrorType.ERROR_DEVICE,
@@ -352,13 +341,5 @@ public class ButtplugWSClient extends WebSocketAdapter {
 
 	public void setErorReceived(final IErrorEvent erorReceived) {
 		this.erorReceived = erorReceived;
-	}
-
-	public ILogEvent getLogReceived() {
-		return this.logReceived;
-	}
-
-	public void setLogReceived(final ILogEvent logReceived) {
-		this.logReceived = logReceived;
 	}
 }

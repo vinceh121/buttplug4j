@@ -21,7 +21,7 @@ public class LinearCmd extends ButtplugDeviceMessage {
 		this.vectors = vectors;
 	}
 
-	public class Vector {
+	public static class Vector {
 		@JsonProperty(value = "Index", required = true)
 		private int index;
 

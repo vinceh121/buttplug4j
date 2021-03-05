@@ -21,7 +21,7 @@ public class RotateCmd extends ButtplugDeviceMessage {
 		this.rotations = rotations;
 	}
 
-	public class Rotation {
+	public static class Rotation {
 		@JsonProperty(value = "Index", required = true)
 		private int index;
 

@@ -24,7 +24,7 @@ public class DeviceListTest {
 				+ "]}}]";
 
 		final HashMap<String, DeviceFeature> deviceMessages = new HashMap<>();
-		deviceMessages.put("VibrateCmd", new DeviceFeature(1));
+		deviceMessages.put("VibrateCmd", new DeviceFeature(1, new int[] { 1 }));
 
 		final ButtplugJsonMessageParser parser = new ButtplugJsonMessageParser();
 		final List<ButtplugMessage> msgs = parser.parseJson(testStr);

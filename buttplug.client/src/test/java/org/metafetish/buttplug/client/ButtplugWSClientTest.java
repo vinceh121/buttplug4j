@@ -1,12 +1,13 @@
 package org.metafetish.buttplug.client;
 
 import java.net.URI;
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.metafetish.buttplug.core.messages.SingleMotorVibrateCmd;
 import org.metafetish.buttplug.core.messages.StopAllDevices;
+import org.metafetish.buttplug.core.messages.VibrateCmd;
 
 public class ButtplugWSClientTest {
 
@@ -20,8 +21,9 @@ public class ButtplugWSClientTest {
 		Thread.sleep(5000);
 		client.requestDeviceList();
 		for (final ButtplugClientDevice dev : client.getDevices()) {
-			if (dev.getAllowedMessages().contains(SingleMotorVibrateCmd.class.getSimpleName())) {
-				client.sendDeviceMessage(dev, new SingleMotorVibrateCmd(dev.getIndex(), 0.5, client.getNextMsgId()));
+			if (dev.getAllowedMessages().containsKey(VibrateCmd.class.getSimpleName())) {
+				client.sendDeviceMessage(dev,
+						new VibrateCmd(dev.getIndex(), Collections.singletonList(new VibrateCmd.Speed(0, 0.5)), 0));
 			}
 		}
 

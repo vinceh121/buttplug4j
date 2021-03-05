@@ -1,34 +1,34 @@
 package org.metafetish.buttplug.client;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.metafetish.buttplug.core.messages.DeviceAdded;
+import org.metafetish.buttplug.core.messages.DeviceFeature;
 import org.metafetish.buttplug.core.messages.DeviceMessageInfo;
 import org.metafetish.buttplug.core.messages.DeviceRemoved;
 
 public class ButtplugClientDevice {
 	private long index;
 	private String name;
-	private List<String> allowedMessages;
+	private Map<String, DeviceFeature> allowedMessages;
 
 	public ButtplugClientDevice(final DeviceMessageInfo aDevInfo) {
 		this.index = aDevInfo.getDeviceIndex();
 		this.name = aDevInfo.getDeviceName();
-		this.allowedMessages = Arrays.asList(aDevInfo.getDeviceMessages());
+		this.allowedMessages = aDevInfo.getDeviceMessages();
 	}
 
 	public ButtplugClientDevice(final DeviceAdded aDevInfo) {
 		this.index = aDevInfo.getDeviceIndex();
 		this.name = aDevInfo.getDeviceName();
-		this.allowedMessages = Arrays.asList(aDevInfo.getDeviceMessages());
+		this.allowedMessages = aDevInfo.getDeviceMessages();
 	}
 
 	public ButtplugClientDevice(final DeviceRemoved aDevInfo) {
 		this.index = aDevInfo.getDeviceIndex();
 		this.name = "";
-		this.allowedMessages = new ArrayList<>();
+		this.allowedMessages = new HashMap<>();
 	}
 
 	public long getIndex() {
@@ -47,11 +47,11 @@ public class ButtplugClientDevice {
 		this.name = name;
 	}
 
-	public List<String> getAllowedMessages() {
+	public Map<String, DeviceFeature> getAllowedMessages() {
 		return this.allowedMessages;
 	}
 
-	public void setAllowedMessages(final List<String> allowedMessages) {
+	public void setAllowedMessages(final Map<String, DeviceFeature> allowedMessages) {
 		this.allowedMessages = allowedMessages;
 	}
 }

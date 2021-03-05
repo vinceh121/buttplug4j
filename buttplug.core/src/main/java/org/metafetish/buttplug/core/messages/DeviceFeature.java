@@ -14,8 +14,9 @@ public class DeviceFeature {
 	public DeviceFeature() {
 	}
 
-	public DeviceFeature(int featureCount) {
+	public DeviceFeature(int featureCount, int[] stepCount) {
 		this.featureCount = featureCount;
+		this.stepCount = stepCount;
 	}
 
 	public int getFeatureCount() {

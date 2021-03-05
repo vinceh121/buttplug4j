@@ -10,6 +10,7 @@ import org.metafetish.buttplug.core.ButtplugMessage;
 import org.metafetish.buttplug.core.messages.Log;
 import org.metafetish.buttplug.core.messages.RequestLog.ButtplugLogLevel;
 
+@SuppressWarnings("deprecation")
 public class LogTest {
 
 	@Test

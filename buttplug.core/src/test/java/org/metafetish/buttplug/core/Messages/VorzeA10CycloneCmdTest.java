@@ -9,6 +9,7 @@ import org.metafetish.buttplug.core.ButtplugJsonMessageParser;
 import org.metafetish.buttplug.core.ButtplugMessage;
 import org.metafetish.buttplug.core.messages.VorzeA10CycloneCmd;
 
+@SuppressWarnings("deprecation")
 public class VorzeA10CycloneCmdTest {
 
 	@Test

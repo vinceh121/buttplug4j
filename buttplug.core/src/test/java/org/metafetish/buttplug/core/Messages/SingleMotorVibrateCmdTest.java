@@ -9,6 +9,7 @@ import org.metafetish.buttplug.core.ButtplugJsonMessageParser;
 import org.metafetish.buttplug.core.ButtplugMessage;
 import org.metafetish.buttplug.core.messages.SingleMotorVibrateCmd;
 
+@SuppressWarnings("deprecation")
 public class SingleMotorVibrateCmdTest {
 
 	@Test

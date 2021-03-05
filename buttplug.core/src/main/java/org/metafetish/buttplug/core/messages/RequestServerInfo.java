@@ -9,13 +9,17 @@ public class RequestServerInfo extends ButtplugMessage {
 	@JsonProperty(value = "ClientName", required = true)
 	private String clientName;
 
+	@JsonProperty(value = "MessageVersion", required = true)
+	private int messageVersion;
+
 	public RequestServerInfo() {
-		this("", ButtplugConsts.DefaultMsgId);
+		this("", 0, ButtplugConsts.DefaultMsgId);
 	}
 
-	public RequestServerInfo(final String clientName, final long id) {
+	public RequestServerInfo(final String clientName, final int messageVersion, final long id) {
 		super(id);
 		this.clientName = clientName;
+		this.messageVersion = messageVersion;
 	}
 
 	public String getClientName() {
@@ -25,4 +29,13 @@ public class RequestServerInfo extends ButtplugMessage {
 	public void setClientName(final String clientName) {
 		this.clientName = clientName;
 	}
+
+	public int getMessageVersion() {
+		return messageVersion;
+	}
+
+	public void setMessageVersion(int messageVersion) {
+		this.messageVersion = messageVersion;
+	}
+
 }

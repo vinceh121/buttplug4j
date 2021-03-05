@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.metafetish.buttplug.core.ButtplugJsonMessageParser;
 import org.metafetish.buttplug.core.ButtplugMessage;
 
+@SuppressWarnings("deprecation")
 public class TestTest {
 
 	@Test

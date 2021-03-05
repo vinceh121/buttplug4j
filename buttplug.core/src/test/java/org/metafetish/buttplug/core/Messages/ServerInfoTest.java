@@ -14,7 +14,7 @@ public class ServerInfoTest {
 	@Test
 	public void test() throws IOException {
 		final String testStr
-				= "[{\"ServerInfo\":{\"Id\":1,\"MajorVersion\":0,\"MinorVersion\":1,\"BuildVersion\":1,\"MessageVersion\":1,\"MaxPingTime\":500,\"ServerName\":\"Websocket Server\"}}]";
+				= "[{\"ServerInfo\":{\"Id\":1,\"MessageVersion\":1,\"MaxPingTime\":500,\"ServerName\":\"Websocket Server\"}}]";
 
 		final ButtplugJsonMessageParser parser = new ButtplugJsonMessageParser();
 		final List<ButtplugMessage> msgs = parser.parseJson(testStr);
@@ -22,9 +22,6 @@ public class ServerInfoTest {
 		Assert.assertEquals(msgs.size(), 1);
 		Assert.assertEquals(msgs.get(0).getClass(), ServerInfo.class);
 		Assert.assertEquals(msgs.get(0).getId(), 1);
-		Assert.assertEquals(((ServerInfo) msgs.get(0)).getMajorVersion(), 0);
-		Assert.assertEquals(((ServerInfo) msgs.get(0)).getMinorVersion(), 1);
-		Assert.assertEquals(((ServerInfo) msgs.get(0)).getBuildVersion(), 1);
 		Assert.assertEquals(((ServerInfo) msgs.get(0)).getMessageVersion(), 1);
 		Assert.assertEquals(((ServerInfo) msgs.get(0)).getMaxPingTime(), 500);
 		Assert.assertEquals(((ServerInfo) msgs.get(0)).getServerName(), "Websocket Server");

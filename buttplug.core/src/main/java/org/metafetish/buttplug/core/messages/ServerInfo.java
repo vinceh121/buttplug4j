@@ -6,15 +6,6 @@ import org.metafetish.buttplug.core.ButtplugMessage;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ServerInfo extends ButtplugMessage {
-	@JsonProperty(value = "MajorVersion", required = true)
-	private int majorVersion = 0;
-
-	@JsonProperty(value = "MinorVersion", required = true)
-	private int minorVersion = 0;
-
-	@JsonProperty(value = "BuildVersion", required = true)
-	private int buildVersion = 1;
-
 	@JsonProperty(value = "MessageVersion", required = true)
 	private int messageVersion;
 
@@ -34,30 +25,6 @@ public class ServerInfo extends ButtplugMessage {
 		this.serverName = serverName;
 		this.messageVersion = messageVersion;
 		this.maxPingTime = maxPingTime;
-	}
-
-	public int getMajorVersion() {
-		return this.majorVersion;
-	}
-
-	public void setMajorVersion(final int majorVersion) {
-		this.majorVersion = majorVersion;
-	}
-
-	public int getMinorVersion() {
-		return this.minorVersion;
-	}
-
-	public void setMinorVersion(final int minorVersion) {
-		this.minorVersion = minorVersion;
-	}
-
-	public int getBuildVersion() {
-		return this.buildVersion;
-	}
-
-	public void setBuildVersion(final int buildVersion) {
-		this.buildVersion = buildVersion;
 	}
 
 	public int getMessageVersion() {

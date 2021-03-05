@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.metafetish.buttplug.core.messages.RequestLog.ButtplugLogLevel;
 
+@SuppressWarnings("deprecation")
 public class ButtplugLogLevelTest {
 
 	@Test

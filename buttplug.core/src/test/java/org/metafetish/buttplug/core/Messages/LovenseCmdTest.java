@@ -9,6 +9,7 @@ import org.metafetish.buttplug.core.ButtplugJsonMessageParser;
 import org.metafetish.buttplug.core.ButtplugMessage;
 import org.metafetish.buttplug.core.messages.LovenseCmd;
 
+@SuppressWarnings("deprecation")
 public class LovenseCmdTest {
 
 	@Test

@@ -9,6 +9,8 @@ import org.metafetish.buttplug.core.ButtplugJsonMessageParser;
 import org.metafetish.buttplug.core.ButtplugMessage;
 import org.metafetish.buttplug.core.messages.KiirooCmd;
 
+
+@SuppressWarnings("deprecation")
 public class KiirooCmdTest {
 
 	@Test

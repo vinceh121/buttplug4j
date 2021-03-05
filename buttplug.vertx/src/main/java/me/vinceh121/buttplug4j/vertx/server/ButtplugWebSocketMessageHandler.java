@@ -1,20 +1,18 @@
 package me.vinceh121.buttplug4j.vertx.server;
 
-import org.metafetish.buttplug.core.ButtplugMessage;
-
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
 
 public interface ButtplugWebSocketMessageHandler extends Handler<RoutingContext> {
-	void addMessageHandler(Handler<ButtplugMessage> handler);
+	void addMessageHandler(Handler<ButtplugMessageContext> handler);
 
-	void addMessageHandler(Handler<ButtplugMessage> handler, String messageType);
+	void addMessageHandler(String messageType, Handler<ButtplugMessageContext> handler);
 
-	void addMessageHandler(Handler<ButtplugMessage> handler, long messageId);
+	void addMessageHandler(long messageId, Handler<ButtplugMessageContext> handler);
 
-	void receiveSingleMessage(Handler<ButtplugMessage> handler);
+	void receiveSingleMessage(Handler<ButtplugMessageContext> handler);
 
-	void receiveSingleMessage(Handler<ButtplugMessage> handler, String messageType);
+	void receiveSingleMessage(String messageType, Handler<ButtplugMessageContext> handler);
 
-	void receiveSingleMessage(Handler<ButtplugMessage> handler, long messageId);
+	void receiveSingleMessage(long messageId, Handler<ButtplugMessageContext> handler);
 }

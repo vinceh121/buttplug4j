@@ -7,17 +7,15 @@ import org.metafetish.buttplug.core.ButtplugJsonMessageParser;
 import org.metafetish.buttplug.core.ButtplugMessage;
 
 import io.vertx.core.Handler;
-import io.vertx.core.Vertx;
 import io.vertx.ext.web.RoutingContext;
 import me.vinceh121.buttplug4j.vertx.server.ButtplugWebSocketHandler;
 
 public class ButtplugWebSocketHandlerImpl implements ButtplugWebSocketHandler {
-	private final Vertx vertx;
 	private final ButtplugJsonMessageParser bpParser;
 	private Handler<ButtplugMessage> handler;
+	private Handler<Throwable> failureHandler;
 
-	public ButtplugWebSocketHandlerImpl(final Vertx vertx) {
-		this.vertx = vertx;
+	public ButtplugWebSocketHandlerImpl() {
 		this.bpParser = new ButtplugJsonMessageParser();
 	}
 
@@ -28,15 +26,13 @@ public class ButtplugWebSocketHandlerImpl implements ButtplugWebSocketHandler {
 				try {
 					final List<ButtplugMessage> l = bpParser.parseJson(str);
 					for (final ButtplugMessage msg : l) {
-						handler.handle(msg); // XXX is this good or does it need some async vertx magic?
+						this.handler.handle(msg); // XXX is this good or does it need some async vertx magic?
 					}
-				} catch (IOException e) {
-					e.printStackTrace();
+				} catch (final IOException e) {
+					this.failureHandler.handle(e);
 				}
 			});
-		}).onFailure(t -> {
-			// TODO handle failure
-		});
+		}).onFailure(this.failureHandler);
 	}
 
 	@Override
@@ -48,6 +44,17 @@ public class ButtplugWebSocketHandlerImpl implements ButtplugWebSocketHandler {
 	@Override
 	public Handler<ButtplugMessage> getButtplugMessageHandler() {
 		return this.handler;
+	}
+
+	@Override
+	public Handler<Throwable> getFailureHandler() {
+		return failureHandler;
+	}
+
+	@Override
+	public ButtplugWebSocketHandler setFailureHandler(Handler<Throwable> failureHandler) {
+		this.failureHandler = failureHandler;
+		return this;
 	}
 
 }

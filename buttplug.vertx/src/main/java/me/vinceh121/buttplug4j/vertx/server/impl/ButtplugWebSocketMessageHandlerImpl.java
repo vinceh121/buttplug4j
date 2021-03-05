@@ -15,6 +15,7 @@ import me.vinceh121.buttplug4j.vertx.server.ButtplugWebSocketMessageHandler;
 
 public class ButtplugWebSocketMessageHandlerImpl implements ButtplugWebSocketMessageHandler {
 	private final ButtplugWebSocketHandler delegate;
+	private final Queue<Handler<Throwable>> failureHandlers;
 	private final Queue<MsgHandlerWrapper> generalHandlers;
 	private final Map<Long, List<MsgHandlerWrapper>> mapId;
 	private final Map<String, List<MsgHandlerWrapper>> mapType;
@@ -22,9 +23,17 @@ public class ButtplugWebSocketMessageHandlerImpl implements ButtplugWebSocketMes
 	public ButtplugWebSocketMessageHandlerImpl() {
 		this.delegate = ButtplugWebSocketHandler.create();
 		this.delegate.setButtplugMessageHandler(this::handleMessage);
+		this.delegate.setFailureHandler(this::handleFailure);
+		this.failureHandlers = new ConcurrentLinkedQueue<>();
 		this.generalHandlers = new ConcurrentLinkedQueue<>();
 		this.mapId = new ConcurrentHashMap<>();
 		this.mapType = new ConcurrentHashMap<>();
+	}
+
+	private void handleFailure(final Throwable t) {
+		for (final Handler<Throwable> handlers : this.failureHandlers) {
+			handlers.handle(t);
+		}
 	}
 
 	private void handleMessage(final ButtplugMessageContext ctx) {
@@ -54,6 +63,11 @@ public class ButtplugWebSocketMessageHandlerImpl implements ButtplugWebSocketMes
 				wrap.handler.handle(ctx);
 			}
 		}
+	}
+
+	@Override
+	public void addFailureHandler(Handler<Throwable> handler) {
+		this.failureHandlers.add(handler);
 	}
 
 	@Override

@@ -4,6 +4,8 @@ import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
 
 public interface ButtplugWebSocketMessageHandler extends Handler<RoutingContext> {
+	void addFailureHandler(Handler<Throwable> handler);
+
 	void addMessageHandler(Handler<ButtplugMessageContext> handler);
 
 	void addMessageHandler(String messageType, Handler<ButtplugMessageContext> handler);

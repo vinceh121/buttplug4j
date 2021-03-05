@@ -18,6 +18,7 @@
 	<modules>
 		<module>buttplug.core</module>
 		<module>buttplug.client</module>
+		<module>buttplug.vertx</module>
 	</modules>
 
 	<dependencies>

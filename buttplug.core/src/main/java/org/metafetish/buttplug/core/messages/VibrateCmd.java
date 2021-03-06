@@ -27,6 +27,9 @@ public class VibrateCmd extends ButtplugDeviceMessage {
 		@JsonProperty(value = "Speed", required = true)
 		private double speed;
 
+		public Speed() {
+		}
+
 		public Speed(int index, double speed) {
 			this.index = index;
 			this.speed = speed;

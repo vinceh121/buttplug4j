@@ -54,7 +54,7 @@ public class ButtplugWebSocketMessageHandlerImpl implements ButtplugWebSocketMes
 			}
 		}
 
-		final List<MsgHandlerWrapper> listType = this.mapType.get(ctx.getMessage().getClass().getName());
+		final List<MsgHandlerWrapper> listType = this.mapType.get(ctx.getMessage().getClass().getSimpleName());
 		if (listType != null && listType.size() != 0) {
 			for (final MsgHandlerWrapper wrap : listType) {
 				if (wrap.single) {

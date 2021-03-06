@@ -4,16 +4,19 @@ import org.metafetish.buttplug.core.messages.DeviceAdded;
 import org.metafetish.buttplug.core.messages.DeviceList;
 import org.metafetish.buttplug.core.messages.DeviceRemoved;
 import org.metafetish.buttplug.core.messages.Error;
+import org.metafetish.buttplug.core.messages.LinearCmd;
 import org.metafetish.buttplug.core.messages.Ok;
 import org.metafetish.buttplug.core.messages.Ping;
 import org.metafetish.buttplug.core.messages.RequestDeviceList;
 import org.metafetish.buttplug.core.messages.RequestServerInfo;
+import org.metafetish.buttplug.core.messages.RotateCmd;
 import org.metafetish.buttplug.core.messages.ScanningFinished;
 import org.metafetish.buttplug.core.messages.ServerInfo;
 import org.metafetish.buttplug.core.messages.StartScanning;
 import org.metafetish.buttplug.core.messages.StopAllDevices;
 import org.metafetish.buttplug.core.messages.StopDeviceCmd;
 import org.metafetish.buttplug.core.messages.StopScanning;
+import org.metafetish.buttplug.core.messages.VibrateCmd;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -39,6 +42,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 		@JsonSubTypes.Type(value = DeviceRemoved.class, name = "DeviceRemoved"),
 		@JsonSubTypes.Type(value = StopAllDevices.class, name = "StopAllDevices"),
 		@JsonSubTypes.Type(value = StopDeviceCmd.class, name = "StopDeviceCmd"),
+		@JsonSubTypes.Type(value = VibrateCmd.class, name = "VibrateCmd"),
+		@JsonSubTypes.Type(value = LinearCmd.class, name = "LinearCmd"),
+		@JsonSubTypes.Type(value = RotateCmd.class, name = "RotateCmd"),
 // @JsonSubTypes.Type(value = VorzeA10CycloneCmd.class, name =
 // "VorzeA10CycloneCmd"),
 // @JsonSubTypes.Type(value = FleshlightLaunchFW12Cmd.class, name =

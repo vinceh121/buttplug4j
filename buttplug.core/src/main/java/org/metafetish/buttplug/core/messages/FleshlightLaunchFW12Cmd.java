@@ -5,7 +5,7 @@ import org.metafetish.buttplug.core.ButtplugDeviceMessage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Deprecated
+@Deprecated(since = "Buttplug 2")
 public class FleshlightLaunchFW12Cmd extends ButtplugDeviceMessage {
 
 	@JsonProperty(value = "Speed", required = true)

@@ -59,4 +59,9 @@ public class DeviceFeature {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "DeviceFeature [featureCount=" + featureCount + ", stepCount=" + Arrays.toString(stepCount) + "]";
+	}
 }

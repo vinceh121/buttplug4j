@@ -24,7 +24,7 @@ public class DeviceListTest {
 				+ "]}}]";
 
 		final HashMap<String, DeviceFeature> deviceMessages = new HashMap<>();
-		deviceMessages.put("VibrateCmd", new DeviceFeature(1, new int[] { 1 }));
+		deviceMessages.put("VibrateCmd", new DeviceFeature(1, new int[] { 0 }));
 
 		final ButtplugJsonMessageParser parser = new ButtplugJsonMessageParser();
 		final List<ButtplugMessage> msgs = parser.parseJson(testStr);
@@ -37,11 +37,11 @@ public class DeviceListTest {
 		final List<DeviceMessageInfo> devs = ((DeviceList) msgs.get(0)).getDevices();
 		Assert.assertEquals(2, devs.get(0).getDeviceIndex());
 		Assert.assertEquals("foo", devs.get(0).getDeviceName());
-		Assert.assertTrue(deviceMessages.equals(devs.get(0).getDeviceMessages()));
+		Assert.assertEquals(deviceMessages, devs.get(0).getDeviceMessages());
 
 		Assert.assertEquals(4, devs.get(1).getDeviceIndex());
 		Assert.assertEquals("bar", devs.get(1).getDeviceName());
-		Assert.assertTrue(deviceMessages.equals(devs.get(1).getDeviceMessages()));
+		Assert.assertEquals(deviceMessages, devs.get(1).getDeviceMessages());
 
 		String jsonOut = parser.formatJson(msgs);
 		Assert.assertEquals(testStr, jsonOut);

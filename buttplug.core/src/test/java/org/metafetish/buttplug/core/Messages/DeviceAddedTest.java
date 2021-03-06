@@ -28,7 +28,7 @@ public class DeviceAddedTest {
 		Assert.assertEquals(3, msgs.get(0).getId());
 		Assert.assertEquals(2, ((DeviceAdded) msgs.get(0)).getDeviceIndex());
 		Assert.assertEquals("foo", ((DeviceAdded) msgs.get(0)).getDeviceName());
-		Assert.assertTrue(deviceMessages.equals(((DeviceAdded) msgs.get(0)).getDeviceMessages()));
+		Assert.assertEquals(deviceMessages, ((DeviceAdded) msgs.get(0)).getDeviceMessages());
 
 		String jsonOut = parser.formatJson(msgs);
 		Assert.assertEquals(testStr, jsonOut);

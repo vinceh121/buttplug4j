@@ -5,7 +5,7 @@ import org.metafetish.buttplug.core.ButtplugDeviceMessage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Deprecated
+@Deprecated(since = "Buttplug 2")
 public class LovenseCmd extends ButtplugDeviceMessage {
 
 	@JsonProperty(value = "Command", required = true)

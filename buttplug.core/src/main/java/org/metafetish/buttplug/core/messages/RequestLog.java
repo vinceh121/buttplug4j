@@ -6,7 +6,7 @@ import org.metafetish.buttplug.core.ButtplugMessage;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-@Deprecated
+@Deprecated(since = "Buttplug 2")
 public class RequestLog extends ButtplugMessage {
 
 	@JsonProperty(value = "LogLevel", required = true)

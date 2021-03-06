@@ -1,5 +1,6 @@
 package org.metafetish.buttplug.core;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -30,12 +31,12 @@ public class ButtplugJsonMessageParser {
 		return this.mapper.readValue(json, new TypeReference<List<ButtplugMessage>>() {});
 	}
 
-	public String formatJson(final List<ButtplugMessage> msgs) throws JsonProcessingException {
-		return this.mapper.writeValueAsString(msgs);
+	public String formatJson(final ButtplugMessage msgs) throws JsonProcessingException {
+		return this.formatJson(Collections.singletonList(msgs));
 	}
 
-	public String formatJson(final ButtplugMessage msgs) throws JsonProcessingException {
-		return this.mapper.writeValueAsString(new ButtplugMessage[] { msgs });
+	public String formatJson(final List<ButtplugMessage> msgs) throws JsonProcessingException {
+		return this.mapper.writeValueAsString(msgs);
 	}
 
 	public ObjectMapper getMapper() {

@@ -5,7 +5,7 @@ import org.metafetish.buttplug.core.ButtplugMessage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Deprecated
+@Deprecated(since = "Buttplug 2")
 public class Test extends ButtplugMessage {
 
 	@JsonProperty(value = "TestString", required = true)

@@ -31,10 +31,10 @@ public class RequestServerInfo extends ButtplugMessage {
 	}
 
 	public int getMessageVersion() {
-		return messageVersion;
+		return this.messageVersion;
 	}
 
-	public void setMessageVersion(int messageVersion) {
+	public void setMessageVersion(final int messageVersion) {
 		this.messageVersion = messageVersion;
 	}
 

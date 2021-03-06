@@ -40,6 +40,6 @@ public class ButtplugJsonMessageParser {
 	}
 
 	public ObjectMapper getMapper() {
-		return mapper;
+		return this.mapper;
 	}
 }

@@ -16,8 +16,16 @@ public class RotateCmd extends ButtplugDeviceMessage {
 		this(-1, Collections.emptyList(), ButtplugConsts.DEFAULT_MSG_ID);
 	}
 
-	public RotateCmd(final long deviceIndex, List<Rotation> rotations, final long id) {
+	public RotateCmd(final long deviceIndex, final List<Rotation> rotations, final long id) {
 		super(id, deviceIndex);
+		this.rotations = rotations;
+	}
+
+	public List<Rotation> getRotations() {
+		return rotations;
+	}
+
+	public void setRotations(List<Rotation> rotations) {
 		this.rotations = rotations;
 	}
 
@@ -34,31 +42,31 @@ public class RotateCmd extends ButtplugDeviceMessage {
 		public Rotation() {
 		}
 
-		public Rotation(int index) {
+		public Rotation(final int index) {
 			this.index = index;
 		}
 
 		public int getIndex() {
-			return index;
+			return this.index;
 		}
 
-		public void setIndex(int index) {
+		public void setIndex(final int index) {
 			this.index = index;
 		}
 
 		public double getSpeed() {
-			return speed;
+			return this.speed;
 		}
 
-		public void setSpeed(double speed) {
+		public void setSpeed(final double speed) {
 			this.speed = speed;
 		}
 
 		public boolean isClockwise() {
-			return clockwise;
+			return this.clockwise;
 		}
 
-		public void setClockwise(boolean clockwise) {
+		public void setClockwise(final boolean clockwise) {
 			this.clockwise = clockwise;
 		}
 	}

@@ -16,8 +16,16 @@ public class VibrateCmd extends ButtplugDeviceMessage {
 		this(-1, Collections.emptyList(), ButtplugConsts.DEFAULT_MSG_ID);
 	}
 
-	public VibrateCmd(final long deviceIndex, List<Speed> speeds, final long id) {
+	public VibrateCmd(final long deviceIndex, final List<Speed> speeds, final long id) {
 		super(id, deviceIndex);
+		this.speeds = speeds;
+	}
+
+	public List<Speed> getSpeeds() {
+		return this.speeds;
+	}
+
+	public void setSpeeds(final List<Speed> speeds) {
 		this.speeds = speeds;
 	}
 
@@ -30,24 +38,24 @@ public class VibrateCmd extends ButtplugDeviceMessage {
 		public Speed() {
 		}
 
-		public Speed(int index, double speed) {
+		public Speed(final int index, final double speed) {
 			this.index = index;
 			this.speed = speed;
 		}
 
 		public int getIndex() {
-			return index;
+			return this.index;
 		}
 
-		public void setIndex(int index) {
+		public void setIndex(final int index) {
 			this.index = index;
 		}
 
 		public double getSpeed() {
-			return speed;
+			return this.speed;
 		}
 
-		public void setSpeed(double speed) {
+		public void setSpeed(final double speed) {
 			this.speed = speed;
 		}
 	}

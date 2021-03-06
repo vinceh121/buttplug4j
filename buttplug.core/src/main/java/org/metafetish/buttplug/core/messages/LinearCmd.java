@@ -16,8 +16,16 @@ public class LinearCmd extends ButtplugDeviceMessage {
 		this(-1, Collections.emptyList(), ButtplugConsts.DEFAULT_MSG_ID);
 	}
 
-	public LinearCmd(final long deviceIndex, List<Vector> vectors, final long id) {
+	public LinearCmd(final long deviceIndex, final List<Vector> vectors, final long id) {
 		super(id, deviceIndex);
+		this.vectors = vectors;
+	}
+
+	public List<Vector> getVectors() {
+		return vectors;
+	}
+
+	public void setVectors(List<Vector> vectors) {
 		this.vectors = vectors;
 	}
 
@@ -34,33 +42,33 @@ public class LinearCmd extends ButtplugDeviceMessage {
 		public Vector() {
 		}
 
-		public Vector(int index, int duration, double speed) {
+		public Vector(final int index, final int duration, final double speed) {
 			this.index = index;
 			this.duration = duration;
 			this.position = speed;
 		}
 
 		public int getIndex() {
-			return index;
+			return this.index;
 		}
 
-		public void setIndex(int index) {
+		public void setIndex(final int index) {
 			this.index = index;
 		}
 
 		public int getDuration() {
-			return duration;
+			return this.duration;
 		}
 
-		public void setDuration(int duration) {
+		public void setDuration(final int duration) {
 			this.duration = duration;
 		}
 
 		public double getPosition() {
-			return position;
+			return this.position;
 		}
 
-		public void setPosition(double position) {
+		public void setPosition(final double position) {
 			this.position = position;
 		}
 	}

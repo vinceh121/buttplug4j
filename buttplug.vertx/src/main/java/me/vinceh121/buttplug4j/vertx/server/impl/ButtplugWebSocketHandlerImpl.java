@@ -25,7 +25,7 @@ public class ButtplugWebSocketHandlerImpl implements ButtplugWebSocketHandler {
 		event.request().toWebSocket().onSuccess(ws -> {
 			ws.textMessageHandler(str -> {
 				try {
-					final List<ButtplugMessage> l = bpParser.parseJson(str);
+					final List<ButtplugMessage> l = this.bpParser.parseJson(str);
 					for (final ButtplugMessage msg : l) {
 						this.handler.handle(new ButtplugMessageContext(event, ws, msg));
 						// XXX is this good or does it
@@ -52,11 +52,11 @@ public class ButtplugWebSocketHandlerImpl implements ButtplugWebSocketHandler {
 
 	@Override
 	public Handler<Throwable> getFailureHandler() {
-		return failureHandler;
+		return this.failureHandler;
 	}
 
 	@Override
-	public ButtplugWebSocketHandler setFailureHandler(Handler<Throwable> failureHandler) {
+	public ButtplugWebSocketHandler setFailureHandler(final Handler<Throwable> failureHandler) {
 		this.failureHandler = failureHandler;
 		return this;
 	}

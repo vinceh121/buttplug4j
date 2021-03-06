@@ -5,7 +5,7 @@ import io.vertx.ext.web.RoutingContext;
 import me.vinceh121.buttplug4j.vertx.server.impl.ButtplugWebSocketHandlerImpl;
 
 public interface ButtplugWebSocketHandler extends Handler<RoutingContext> {
-	public static ButtplugWebSocketHandler create() {
+	static ButtplugWebSocketHandler create() {
 		return new ButtplugWebSocketHandlerImpl();
 	}
 

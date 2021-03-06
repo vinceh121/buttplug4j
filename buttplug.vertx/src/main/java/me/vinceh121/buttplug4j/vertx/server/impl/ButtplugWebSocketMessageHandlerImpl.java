@@ -66,7 +66,7 @@ public class ButtplugWebSocketMessageHandlerImpl implements ButtplugWebSocketMes
 	}
 
 	@Override
-	public void addFailureHandler(Handler<Throwable> handler) {
+	public void addFailureHandler(final Handler<Throwable> handler) {
 		this.failureHandlers.add(handler);
 	}
 

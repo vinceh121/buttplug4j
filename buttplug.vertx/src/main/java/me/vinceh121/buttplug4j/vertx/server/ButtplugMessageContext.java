@@ -13,33 +13,34 @@ public class ButtplugMessageContext {
 	public ButtplugMessageContext() {
 	}
 
-	public ButtplugMessageContext(RoutingContext routingContext, ServerWebSocket webSocket, ButtplugMessage message) {
+	public ButtplugMessageContext(final RoutingContext routingContext, final ServerWebSocket webSocket,
+			final ButtplugMessage message) {
 		this.routingContext = routingContext;
 		this.webSocket = webSocket;
 		this.message = message;
 	}
 
 	public RoutingContext getRoutingContext() {
-		return routingContext;
+		return this.routingContext;
 	}
 
-	public void setRoutingContext(RoutingContext routingContext) {
+	public void setRoutingContext(final RoutingContext routingContext) {
 		this.routingContext = routingContext;
 	}
 
 	public ServerWebSocket getWebSocket() {
-		return webSocket;
+		return this.webSocket;
 	}
 
-	public void setWebSocket(ServerWebSocket webSocket) {
+	public void setWebSocket(final ServerWebSocket webSocket) {
 		this.webSocket = webSocket;
 	}
 
 	public ButtplugMessage getMessage() {
-		return message;
+		return this.message;
 	}
 
-	public void setMessage(ButtplugMessage message) {
+	public void setMessage(final ButtplugMessage message) {
 		this.message = message;
 	}
 }

@@ -9,6 +9,7 @@ import org.metafetish.buttplug.core.ButtplugJsonMessageParser;
 import org.metafetish.buttplug.core.ButtplugMessage;
 import org.metafetish.buttplug.core.messages.RequestLog;
 import org.metafetish.buttplug.core.messages.RequestLog.ButtplugLogLevel;
+
 @SuppressWarnings("deprecation")
 public class RequestLogTest {
 

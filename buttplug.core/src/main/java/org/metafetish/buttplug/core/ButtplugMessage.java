@@ -1,5 +1,7 @@
 package org.metafetish.buttplug.core;
 
+import org.metafetish.buttplug.core.messages.BatteryLevelCmd;
+import org.metafetish.buttplug.core.messages.BatteryLevelReading;
 import org.metafetish.buttplug.core.messages.DeviceAdded;
 import org.metafetish.buttplug.core.messages.DeviceList;
 import org.metafetish.buttplug.core.messages.DeviceRemoved;
@@ -11,6 +13,8 @@ import org.metafetish.buttplug.core.messages.Log;
 import org.metafetish.buttplug.core.messages.LovenseCmd;
 import org.metafetish.buttplug.core.messages.Ok;
 import org.metafetish.buttplug.core.messages.Ping;
+import org.metafetish.buttplug.core.messages.RSSILevelCmd;
+import org.metafetish.buttplug.core.messages.RSSILevelReading;
 import org.metafetish.buttplug.core.messages.RawReadCmd;
 import org.metafetish.buttplug.core.messages.RawReading;
 import org.metafetish.buttplug.core.messages.RawSubscribeCmd;
@@ -39,28 +43,38 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 @SuppressWarnings("deprecation")
 @JsonTypeInfo(include = As.WRAPPER_OBJECT, use = Id.NAME)
-@JsonSubTypes({ @JsonSubTypes.Type(value = Ok.class, name = "Ok"),
+@JsonSubTypes({
+		// Status messages
+		@JsonSubTypes.Type(value = Ok.class, name = "Ok"), @JsonSubTypes.Type(value = Error.class, name = "Error"),
 		@JsonSubTypes.Type(value = Ping.class, name = "Ping"),
+		// Handshake messages
+		@JsonSubTypes.Type(value = RequestServerInfo.class, name = "RequestServerInfo"),
+		@JsonSubTypes.Type(value = ServerInfo.class, name = "ServerInfo"),
+		// Enumeration messages
 		@JsonSubTypes.Type(value = StartScanning.class, name = "StartScanning"),
 		@JsonSubTypes.Type(value = StopScanning.class, name = "StopScanning"),
 		@JsonSubTypes.Type(value = ScanningFinished.class, name = "ScanningFinished"),
 		@JsonSubTypes.Type(value = RequestDeviceList.class, name = "RequestDeviceList"),
-		@JsonSubTypes.Type(value = RequestServerInfo.class, name = "RequestServerInfo"),
-		@JsonSubTypes.Type(value = ServerInfo.class, name = "ServerInfo"),
-		@JsonSubTypes.Type(value = Error.class, name = "Error"),
 		@JsonSubTypes.Type(value = DeviceAdded.class, name = "DeviceAdded"),
 		@JsonSubTypes.Type(value = DeviceList.class, name = "DeviceList"),
 		@JsonSubTypes.Type(value = DeviceRemoved.class, name = "DeviceRemoved"),
 		@JsonSubTypes.Type(value = StopAllDevices.class, name = "StopAllDevices"),
 		@JsonSubTypes.Type(value = StopDeviceCmd.class, name = "StopDeviceCmd"),
-		@JsonSubTypes.Type(value = VibrateCmd.class, name = "VibrateCmd"),
-		@JsonSubTypes.Type(value = LinearCmd.class, name = "LinearCmd"),
-		@JsonSubTypes.Type(value = RotateCmd.class, name = "RotateCmd"),
+		// Raw device messages
 		@JsonSubTypes.Type(value = RawWriteCmd.class, name = "RawWriteCmd"),
 		@JsonSubTypes.Type(value = RawReadCmd.class, name = "RawReadCmd"),
 		@JsonSubTypes.Type(value = RawReading.class, name = "RawReading"),
 		@JsonSubTypes.Type(value = RawSubscribeCmd.class, name = "RawSubscribeCmd"),
 		@JsonSubTypes.Type(value = RawUnsubscribeCmd.class, name = "RawUnsubscribeCmd"),
+		// Generic device messages
+		@JsonSubTypes.Type(value = VibrateCmd.class, name = "VibrateCmd"),
+		@JsonSubTypes.Type(value = LinearCmd.class, name = "LinearCmd"),
+		@JsonSubTypes.Type(value = RotateCmd.class, name = "RotateCmd"),
+		// Generic sensor messages
+		@JsonSubTypes.Type(value = BatteryLevelCmd.class, name="BatteryLevelCmd"),
+		@JsonSubTypes.Type(value = BatteryLevelReading.class, name="BatteryLevelReading"),
+		@JsonSubTypes.Type(value = RSSILevelCmd.class, name="RSSILevelCmd"),
+		@JsonSubTypes.Type(value = RSSILevelReading.class, name="RSSILevelReading"),
 		// Deprecated messages
 		@JsonSubTypes.Type(value = RequestLog.class, name = "RequestLog"),
 		@JsonSubTypes.Type(value = Log.class, name = "Log"), @JsonSubTypes.Type(value = Test.class, name = "Test"),

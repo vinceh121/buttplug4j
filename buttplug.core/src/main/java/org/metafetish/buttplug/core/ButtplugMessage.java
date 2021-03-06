@@ -11,6 +11,11 @@ import org.metafetish.buttplug.core.messages.Log;
 import org.metafetish.buttplug.core.messages.LovenseCmd;
 import org.metafetish.buttplug.core.messages.Ok;
 import org.metafetish.buttplug.core.messages.Ping;
+import org.metafetish.buttplug.core.messages.RawReadCmd;
+import org.metafetish.buttplug.core.messages.RawReading;
+import org.metafetish.buttplug.core.messages.RawSubscribeCmd;
+import org.metafetish.buttplug.core.messages.RawUnsubscribeCmd;
+import org.metafetish.buttplug.core.messages.RawWriteCmd;
 import org.metafetish.buttplug.core.messages.RequestDeviceList;
 import org.metafetish.buttplug.core.messages.RequestLog;
 import org.metafetish.buttplug.core.messages.RequestServerInfo;
@@ -51,6 +56,11 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 		@JsonSubTypes.Type(value = VibrateCmd.class, name = "VibrateCmd"),
 		@JsonSubTypes.Type(value = LinearCmd.class, name = "LinearCmd"),
 		@JsonSubTypes.Type(value = RotateCmd.class, name = "RotateCmd"),
+		@JsonSubTypes.Type(value = RawWriteCmd.class, name = "RawWriteCmd"),
+		@JsonSubTypes.Type(value = RawReadCmd.class, name = "RawReadCmd"),
+		@JsonSubTypes.Type(value = RawReading.class, name = "RawReading"),
+		@JsonSubTypes.Type(value = RawSubscribeCmd.class, name = "RawSubscribeCmd"),
+		@JsonSubTypes.Type(value = RawUnsubscribeCmd.class, name = "RawUnsubscribeCmd"),
 		// Deprecated messages
 		@JsonSubTypes.Type(value = RequestLog.class, name = "RequestLog"),
 		@JsonSubTypes.Type(value = Log.class, name = "Log"), @JsonSubTypes.Type(value = Test.class, name = "Test"),

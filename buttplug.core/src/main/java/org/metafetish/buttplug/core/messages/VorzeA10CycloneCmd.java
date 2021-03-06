@@ -14,7 +14,7 @@ public class VorzeA10CycloneCmd extends ButtplugDeviceMessage {
 	private int speed;
 
 	public VorzeA10CycloneCmd() {
-		this(-1, 0, false, ButtplugConsts.DefaultMsgId);
+		this(-1, 0, false, ButtplugConsts.DEFAULT_MSG_ID);
 	}
 
 	public VorzeA10CycloneCmd(final long deviceIndex, final int speed, final boolean clockwise, final long id) {

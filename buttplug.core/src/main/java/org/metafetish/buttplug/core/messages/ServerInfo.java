@@ -16,7 +16,7 @@ public class ServerInfo extends ButtplugMessage {
 	private String serverName;
 
 	public ServerInfo() {
-		this("", 1, 0, ButtplugConsts.DefaultMsgId);
+		this("", 1, 0, ButtplugConsts.DEFAULT_MSG_ID);
 	}
 
 	public ServerInfo(final String serverName, final int messageVersion, final long maxPingTime, final long id) {

@@ -14,7 +14,7 @@ public class FleshlightLaunchFW12Cmd extends ButtplugDeviceMessage {
 	private int position;
 
 	public FleshlightLaunchFW12Cmd() {
-		this(-1, 0, 0, ButtplugConsts.DefaultMsgId);
+		this(-1, 0, 0, ButtplugConsts.DEFAULT_MSG_ID);
 		this.setSpeed(0);
 		this.getPosition(0);
 	}

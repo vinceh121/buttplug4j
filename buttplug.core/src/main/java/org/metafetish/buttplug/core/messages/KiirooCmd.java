@@ -12,7 +12,7 @@ public class KiirooCmd extends ButtplugDeviceMessage {
 	private String deviceCmd;
 
 	public KiirooCmd() {
-		this(-1, "", ButtplugConsts.DefaultMsgId);
+		this(-1, "", ButtplugConsts.DEFAULT_MSG_ID);
 	}
 
 	public KiirooCmd(final long deviceIndex, final String deviceCmd, final long id) {

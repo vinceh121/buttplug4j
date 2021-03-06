@@ -13,7 +13,7 @@ public class RotateCmd extends ButtplugDeviceMessage {
 	private List<Rotation> rotations;
 
 	public RotateCmd() {
-		this(-1, Collections.emptyList(), ButtplugConsts.DefaultMsgId);
+		this(-1, Collections.emptyList(), ButtplugConsts.DEFAULT_MSG_ID);
 	}
 
 	public RotateCmd(final long deviceIndex, List<Rotation> rotations, final long id) {

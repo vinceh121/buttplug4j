@@ -14,7 +14,7 @@ public class DeviceList extends ButtplugMessage {
 	private List<DeviceMessageInfo> devices;
 
 	public DeviceList() {
-		this(Collections.emptyList(), ButtplugConsts.DefaultMsgId);
+		this(Collections.emptyList(), ButtplugConsts.DEFAULT_MSG_ID);
 	}
 
 	public DeviceList(final List<DeviceMessageInfo> devices, final long id) {

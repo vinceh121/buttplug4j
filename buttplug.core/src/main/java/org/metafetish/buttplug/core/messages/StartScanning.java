@@ -6,7 +6,7 @@ import org.metafetish.buttplug.core.ButtplugMessage;
 public class StartScanning extends ButtplugMessage {
 
 	public StartScanning() {
-		super(ButtplugConsts.DefaultMsgId);
+		super(ButtplugConsts.DEFAULT_MSG_ID);
 	}
 
 	public StartScanning(final long id) {

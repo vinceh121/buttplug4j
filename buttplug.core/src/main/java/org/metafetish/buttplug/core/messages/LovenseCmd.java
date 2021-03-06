@@ -12,7 +12,7 @@ public class LovenseCmd extends ButtplugDeviceMessage {
 	private String deviceCmd;
 
 	public LovenseCmd() {
-		this(-1, "", ButtplugConsts.DefaultMsgId);
+		this(-1, "", ButtplugConsts.DEFAULT_MSG_ID);
 	}
 
 	public LovenseCmd(final long deviceIndex, final String deviceCmd, final long id) {

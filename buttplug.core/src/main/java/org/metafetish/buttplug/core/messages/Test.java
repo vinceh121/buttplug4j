@@ -12,7 +12,7 @@ public class Test extends ButtplugMessage {
 	private String testString;
 
 	public Test() {
-		this("", ButtplugConsts.DefaultMsgId);
+		this("", ButtplugConsts.DEFAULT_MSG_ID);
 	}
 
 	public Test(final String testString, final long id) {

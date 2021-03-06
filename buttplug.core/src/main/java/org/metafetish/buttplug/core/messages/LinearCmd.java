@@ -13,7 +13,7 @@ public class LinearCmd extends ButtplugDeviceMessage {
 	private List<Vector> vectors;
 
 	public LinearCmd() {
-		this(-1, Collections.emptyList(), ButtplugConsts.DefaultMsgId);
+		this(-1, Collections.emptyList(), ButtplugConsts.DEFAULT_MSG_ID);
 	}
 
 	public LinearCmd(final long deviceIndex, List<Vector> vectors, final long id) {

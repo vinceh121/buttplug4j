@@ -13,7 +13,7 @@ public class RequestServerInfo extends ButtplugMessage {
 	private int messageVersion;
 
 	public RequestServerInfo() {
-		this("", 0, ButtplugConsts.DefaultMsgId);
+		this("", 0, ButtplugConsts.DEFAULT_MSG_ID);
 	}
 
 	public RequestServerInfo(final String clientName, final int messageVersion, final long id) {

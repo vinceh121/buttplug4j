@@ -6,7 +6,7 @@ import org.metafetish.buttplug.core.ButtplugMessage;
 public class StopAllDevices extends ButtplugMessage {
 
 	public StopAllDevices() {
-		super(ButtplugConsts.DefaultMsgId);
+		super(ButtplugConsts.DEFAULT_MSG_ID);
 	}
 
 	public StopAllDevices(final long id) {

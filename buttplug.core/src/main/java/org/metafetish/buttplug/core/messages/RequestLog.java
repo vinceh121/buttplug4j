@@ -13,7 +13,7 @@ public class RequestLog extends ButtplugMessage {
 	private ButtplugLogLevel logLevel;
 
 	public RequestLog() {
-		this(ButtplugLogLevel.OFF, ButtplugConsts.DefaultMsgId);
+		this(ButtplugLogLevel.OFF, ButtplugConsts.DEFAULT_MSG_ID);
 	}
 
 	public RequestLog(final ButtplugLogLevel logLevel, final long id) {

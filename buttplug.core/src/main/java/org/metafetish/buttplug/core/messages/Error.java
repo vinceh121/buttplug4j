@@ -15,7 +15,7 @@ public class Error extends ButtplugMessage {
 	private String errorMessage;
 
 	public Error() {
-		this("", ErrorType.ERROR_UNKNOWN, ButtplugConsts.DefaultMsgId);
+		this("", ErrorType.ERROR_UNKNOWN, ButtplugConsts.DEFAULT_MSG_ID);
 	}
 
 	public Error(final String errorMessage, final ErrorType errorCode, final long id) {

@@ -13,7 +13,7 @@ public class VibrateCmd extends ButtplugDeviceMessage {
 	private List<Speed> speeds;
 
 	public VibrateCmd() {
-		this(-1, Collections.emptyList(), ButtplugConsts.DefaultMsgId);
+		this(-1, Collections.emptyList(), ButtplugConsts.DEFAULT_MSG_ID);
 	}
 
 	public VibrateCmd(final long deviceIndex, List<Speed> speeds, final long id) {

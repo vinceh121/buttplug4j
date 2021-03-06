@@ -15,7 +15,7 @@ public class Log extends ButtplugMessage {
 	private String logMessage;
 
 	public Log() {
-		this(ButtplugLogLevel.OFF, "", ButtplugConsts.DefaultMsgId);
+		this(ButtplugLogLevel.OFF, "", ButtplugConsts.DEFAULT_MSG_ID);
 	}
 
 	public Log(final ButtplugLogLevel logLevel, final String logMessage, final long id) {

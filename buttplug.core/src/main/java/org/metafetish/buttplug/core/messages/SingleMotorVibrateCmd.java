@@ -12,7 +12,7 @@ public class SingleMotorVibrateCmd extends ButtplugDeviceMessage {
 	private double speed;
 
 	public SingleMotorVibrateCmd() {
-		this(-1, 0, ButtplugConsts.DefaultMsgId);
+		this(-1, 0, ButtplugConsts.DEFAULT_MSG_ID);
 	}
 
 	public SingleMotorVibrateCmd(final long deviceIndex, final double speed, final long id) {
